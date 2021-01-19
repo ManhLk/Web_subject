@@ -1,0 +1,1036 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{fancybox}%dùng gói fancybox tự tìm trên mạng nha
+\author{Luong Khac Manh}
+\usepackage{array}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+
+\begin{document}
+
+\thispagestyle{empty}
+\thisfancypage{%đóng khung trang này
+\setlength{\fboxsep}{0pt}% 8pt là độ dày của đường viền
+\fbox}{} % phần nội dung sau là tương tự như đã làm
+\begin{center}
+\begin{large}
+\textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI\\
+VIỆN TOÁN ỨNG DỤNG VÀ TIN HỌC}
+\end{large} \\
+\textbf{------------  oOo  ------------}\\[2cm]
+	\centering
+	\includegraphics[width=0.2\linewidth]{../Image/BVP-logo bk-rgb}
+	\label{fig:bk}
+\\[2cm]
+\textbf{
+{\fontsize{26pt}{1}\selectfont BÁO CÁO HỌC PHẦN}\\[4pt]
+{\fontsize{23pt}{1}\selectfont CÔNG NGHỆ WEB VÀ KINH DOANH ĐIỆN TỬ}\\[0.5cm]
+{\fontsize{20pt}{1}\selectfont ĐỀ TÀI: XÂY DỰNG WEBSITE KẾT NỐI GIA SƯ TRỰC TUYẾN}\\[2cm]}
+
+	\hspace{1cm}Sinh viên thực hiện \hspace{7pt}: \hspace{21pt}
+\textbf{\parbox[t]{5cm}{    %tạo parbox ở đây để đánh tên nhiều sv
+		Lương Khắc Mạnh
+}}\\[5pt]
+\hspace{1cm}Mã số sinh viên\hspace{30pt}:\hspace*{24pt}
+\textbf{\parbox[t]{5cm}{    %tạo parbox ở đây để đánh tên nhiều sv
+		20173551
+}}\\[5pt]
+\hspace{1cm}Lớp\hspace{92pt}:\hspace*{24pt}
+\textbf{\parbox[t]{5cm}{    %tạo parbox ở đây để đánh tên nhiều sv
+		Hệ thống thông tin quản lý K62
+}}\\[5pt]
+\hspace{1cm}Giảng viên hướng dẫn\hspace{0pt}:\hspace*{24pt}
+\textbf{\parbox[t]{5cm}{    %tạo parbox ở đây để đánh tên nhiều sv
+		TS. Vũ Thành Nam
+}}\\[5pt]
+\vspace{2.5cm}
+\textbf{
+{\fontsize{16pt}{1}\selectfont Hà Nội - 2021}}
+\end{center}
+
+\tableofcontents
+\chapter*{Phần mở đầu}
+\addcontentsline{toc}{chapter}{Phần mở đầu}
+Ngày nay với sự phát triển mạnh mẽ của khoa học công nghệ do cuộc cách mạng công nghiệp 4.0 bùng nổ trên khắp thế giới đã có sự chuyển biến to lớn và sâu sắc. Tình hình trong nước có nhiều đổi mới toàn diện, việc phát triển và ứng dụng công nghệ thông tin vào trong nhiều ngành có nhiều nét khởi sắc và trong tương lai gần sẽ là lĩnh vực phát triển với nhiều bước đột phá. Sự bùng nổ của Công nghệ thông tin (CNTT) nói riêng và Khoa học công nghệ nói chung đang tác động mạnh mẽ vào sự phát triển của tất cả các ngành trong đời sống xã hội. Kinh tế là một trong những ngành ứng dụng công nghệ thông tin và đạt được những bước tiến nhanh chóng với sự ra đời của hàng loạt mô hình kinh tế mới dựa trên nền tảng kỹ thuật số, tiêu biểu trong số đó là kinh tế chia sẻ.\\
+
+Trong những năm qua, mô hình kinh tế chia sẻ phát triển mạnh mẽ trên thế giới và thâm nhập sâu rộng vào Việt Nam trong nhiều ngành nghề, lĩnh vực như tài chính ngân hàng, dịch vụ, cung ứng lao động,... Giáo dục cũng là một trong những lĩnh vực chịu sự tác động của nền kinh tế chia sẻ. Nhu cầu của con người muốn tiếp thu, học tập tri thức nhân loại ngày càng cao, các tầng lớp, mọi lứa tuổi khác nhau đều muốn tham gia học tập. Xuất phát từ nhu cầu trên kết hợp với nền tảng của công nghệ thông tin em quyết định chọn đề tài "Hệ thống kết nối gia sư trực tuyến" với cơ sở dữ liệu là MS SQL Server và ngôn ngữ lập trình là $C\#$.\\\\
+Báo cáo môn học của em gồm có hai nội dung chính là:
+\begin{description}
+\item[CHƯƠNG 1.]KINH TẾ CHIA SẺ: Nêu khái niệm kinh tế chia sẻ, giới thiệu các mô hình kinh tế chia sẻ và thực trạng của nền kinh tế chia sẻ ở Việt Nam.
+\item[CHƯƠNG 2.]HỆ THỐNG KẾT NỐI GIA SƯ TRỰC TUYẾN: Khảo sát mô hình gia sư truyền thống và các website gia sư trực tuyến đang tồn tại, phân tích, thiết kế hệ thống, cơ sở dữ liệu và cài đặt chạy thử chương trình với một số chức năng.
+\end{description}
+
+Trong quá trình làm bài tập lớn, em đã nghiên cứu, tìm tòi và vận dụng các kiến thức được thầy Vũ Thành Nam trang bị. Tuy nhiên do kiến thức còn hạn chế, nên bài tập lớn của em không thể tránh khỏi những thiếu sót, rất mong nhận được ý kiến đóng góp chỉ đạo của  thầy cô cũng như bạn đọc, để bài tập lớn của em hoàn thiện hơn.\\
+
+Em cũng xin được gửi lời cảm ơn sâu sắt tới thầy Vũ Thành Nam đã giúp đỡ em trong quá trình làm bài tập lớn để em có thể hoàn thành được bài tập lớn cho môn Công nghệ Web và kinh doanh điện tử.\\
+
+Em xin chân thành cảm ơn!
+\chapter{Kinh tế chia sẻ}
+\section{Khái niệm kinh tế chia sẻ}
+Kinh tế chia sẻ (Sharing economy) là hoạt động tái thiết kinh tế, trong đó các cá nhân ẩn danh có thể sử dụng các tài sản, dịch vụ nhàn rỗi, được sở hữu bởi các cá nhân khác thông qua các nền tảng kết hợp trên internet.\\
+
+Kinh tế chia sẻ còn được gọi theo nhiều tên khác nhau như: kinh tế cộng tác (collaborative economy), kinh tế theo cầu (on-demand economy), kinh tế nền tảng (platform economy), kinh tế truy cập (access economy), kinh tế dựa trên các ứng dụng di động (app economy)… Ranh giới giữa các khái niệm có sự đồng nhất ở một số khía cạnh, tuy nhiên nhìn chung, tất cả các tên gọi khác của mô hình kinh tế chia sẻ đều có bản chất là một mô hình kinh doanh mới của kinh doanh ngang hàng, tận dụng lợi thế của phát triển công nghệ số, giúp tiết kiệm chi phí giao dịch và tiếp cận một số lượng lớn khách hàng thông qua các nền tảng số.\\
+
+\section{Giới thiệu mô hình kinh tế chia sẻ}
+Mô hình kinh tế chia sẻ có đặc điểm cơ bản là sử dụng các ứng dụng công nghệ số để cung cấp thông tin cho các cá nhân và tổ chức. Từ đó cho phép tối ưu hóa các nguồn lực thông qua sự tái phân phối, chia sẻ và tái sử dụng các năng lực dư thừa hàng hóa, dịch vụ. Để chia sẻ các nguồn lực, hàng hóa và dịch vụ mới cũng như các ngành mới trong nền kinh tế chia sẻ cần ba yếu tố cơ bản sau: (1) Hành vi của khách hàng đối với nhiều hàng hóa và dịch vụ thay đổi từ sở hữu đến chia
+sẻ; (2) Các mạng xã hội trực tuyến và thị trường điện tử dễ
+dàng liên kết với người tiêu dùng; (3) Các thiết bị di động và dịch vụ điện tử làm cho việc sử dụng hàng hóa được chia sẻ và các dịch vụ thuận tiện hơn.\\
+
+Theo phương pháp phân loại dựa trên hình thức người sở hữu tài sản và người quyết định giá của Judith Wallenstein và Urvesh Shelat, mô hình Kinh tế chia sẻ được chia
+thành ba loại chính là: (1) Mô hình nền tảng tập trung; (2) Mô hình nền tảng phi tập
+trung ; (3) Mô hình nền tảng hỗn hợp. Cụ thể như sau:
+\begin{itemize}
+\item[a)] Mô hình nền tảng tập trung (Centralized Platforms)
+\begin{itemize}
+\item[•] Đơn vị cung cấp nền tảng vừa sở hữu tài sản, vừa quyết định giá thành dịch vụ.
+\item[•] Ưu điểm: Kiểm soát chất lượng tốt hơn và quy trình chuẩn.
+\item[•] Nhược điểm: Chi phí đầu tư ban đầu lớn và khả năng mở rộng cũng tốn nhiều chi phí.
+\item[•] Ví dụ tiêu biểu cho mô hình nền tảng tập trung là Tập đoàn Mai Linh giới thiệu mô hình xe taxi thông minh (Smart Taxi). Khách hàng có thể đặt xe thông qua App Taxi Mai Linh. Toàn bộ cước phí sẽ được tính toán hiển thị trên App hoặc đồng hồ thông minh đặt trên xe. Bên cạnh đó với thiết bị SmartPOS gắn trên xe taxi công nghệ Mai Linh, khách hàng có thể thanh toán cước phí bằng các loại thẻ ngân hàng (nội địa và quốc tế.) nhằm mang lại sự tiện dụng cũng như hạn chế sử dụng tiền mặt trong thời đại số 4.0. 
+\end{itemize}
+\item[b)] Mô hình nền tảng phi tập trung (Decentralized Platforms)
+\begin{itemize}
+\item[•] Đơn vị cung cấp nền tảng chỉ tạo ra môi trường kết nối, người cung cấp dịch vụ là người sở hữu tài sản và cũng là người quyết định giá thành dịch vụ.
+\item[•] Ưu điểm: chi phí ban đầu thấp.
+\item[•] Nhược điểm: nền tảng phải tuyển dụng được nhà cung cấp để đảm bảo nguồn cung.
+\item[•] Ví dụ: Airbnb là mô hình kết nối người cần thuê nhà với những gia đình có phòng trống cần cho thuê thông qua ứng dụng di động Airbnb. Đây là loại hình dịch vụ tương đối mới hoạt động theo mô hình nền tảng phi tập trung, tất cả thanh toán chỉ sử dụng thẻ tín dụng và thông qua Airbnb. Từ đây nhà trung gian sẽ thu một khoản phí đối với cả người cần đặt phòng và chủ nhà. Khoản phí đối với chủ nhà ở mức 3$\%$ tổng giá trị đặt phòng, phí thu khách đặt phòng ở mức 6-12$\%$ và mức phí này sẽ hiển thị luôn trong quá trình khách sử dụng dịch vụ. Mức phí này vẫn đảm bảo người trả thấp hơn đặt phòng ở khách sạn qua các kênh truyền thống.
+\end{itemize}
+\item[c)] Mô hình nền tảng hỗn hợp (Hybrid Platforms)
+\begin{itemize}
+\item[•] Chủ tài sản cung cấp dịch vụ với giá do nền tảng đưa ra và nền tảng cũng đóng góp một phần vai trò trong việc đảm bảo chất lượng sản phẩm được cung ứng đưa ra ngoài thị trường.
+\item[•] Ưu điểm: chi phí đầu tư ban đầu thấp, nền tảng cũng quản lý tốt hơn so về giá cả so với nền tảng phi tập trung.
+\item[•] Ví dụ: Grab cung cấp nền tảng kết nối những những người có xe và những người có nhu cầu đi xe. Grab chính là đơn vị quyết định giá cước chuyến đi theo thời điểm dựa trên các thuật toán, giá cước này thường tài xế không biết trước mà chỉ hiển thị cho khách hàng khi đã đặt xe. Với mỗi chuyến xe, Grab thu của đối tác (tài xế) $23,375\%$ trong đó $25\%$ là hoa hồng dành cho Grab và $3,375\%$ là thu hộ tài xế (tính trên tổng cước chuyến xe). Khách hàng có 2 hình thức thanh toán là thanh toán qua thẻ ngân hàng hoặc tiền mặt. 
+\end{itemize}
+\end{itemize}
+
+Đối tượng tham gia mô hình Kinh tế chia sẻ rất đa dạng và phong phú. Đó có thể là người sử dụng cá nhân, doanh nghiệp phi lợi nhuận, doanh nghiệp vì lợi nhuận, cộng đồng địa phương hoặc khu vực công. Kinh tế chia sẻ đem lại cho người tiêu dùng cơ hội được tiếp cận với những dịch vụ, tài sản mà họ không thể sở hữu cũng như giúp nâng cao phúc lợi xã hội. Nó còn giúp cho việc sử dụng tài sản vật chất và các nguồn
+lực nhàn rỗi khác trở nên hiệu quả hơn, góp phần tiết kiệm chi phí, phát triển kinh tế bền vững và giảm những tác động tiêu cực đến môi trường. Với những lợi ích to lớn trên, Kinh tế chia sẻ đã trở thành một phần không thể thiếu trong nền kinh tế toàn cầu. 
+\newpage
+\section{Kinh tế chia sẻ tại Việt Nam hiện nay}
+Việt Nam là một trong những nước đầu tiên trong ASEAN cho phép thí điểm mô hình kinh doanh ứng dụng  công nghệ kết nối vận tải cho Uber và Grab, bắt đầu từ năm 2014. Tuy nhiên sau 4 năm hoạt động, đến tháng 4/2018, Uber đã rút khỏi thị trường Đông Nam Á và đổi lấy $27,5\%$ cổ phần của Grab. Ngay sau khi Uber rút khỏi thị trường, Việt Nam đã chứng kiến một sự phát triển mạnh mẽ, thể hiện mô hình Kinh tế chia sẻ là một mảng thị trường tiềm năng với sự xuất hiện của VATO, Gonow, T.Net… đã tạo động lực mạnh mẽ cho các doanh nghiệp truyền thống thay đổi phương thức hoạt động kinh doanh từ thủ công sang ứng dụng công nghệ. Tiêu biểu như: Airbnb là một mô hình kết nối người cần thuê nhà với những gia đình có phòng trống cần cho thuê thông qua ứng dụng di động tương tự như Uber, Grab. Ngoài ra còn nhiều dịch vụ cung cấp nền tảng (platform) được ứng dụng rộng rãi như Triip.me (sử dụng nguồn lực của cộng đồng để thiết kế nên các tour du lịch trên toàn thế giới), lendbiz.vn (cung cấp nền tảng kết nối giữa bên cho vay và người đi vay)… Sự phát triển mỗi ngày của công nghệ kéo theo sự sáng tạo trong mở rộng quy mô loại hình dịch vụ như tại Grab, dịch vụ vận tải không chỉ còn giữa người với người nữa mà mở rộng hơn sang dịch vụ vận chuyển hàng hóa, vận chuyển thức ăn đáp ứng nhu cầu thực tiễn của xã hội. Trong lĩnh vực hỗ trợ gia đình, Rada là một ứng dụng kết nối người dùng với các nhà cung cấp dịch vụ về dọn dẹp vệ sinh, sửa chữa các thiết bị gia đình… Sau năm đầu hoạt động (4/2016-4/2017), Rada đã có hơn 20.000 giao dịch được hình thành với 56.000 khách hàng, hơn 1.000 nhà cung cấp và 3.500 thợ/đơn vị cung cấp…\\
+
+Kinh tế chia sẻ đem đến nhiều cơ hội cho Việt Nam, cụ thể:
+\begin{itemize}
+\item[•]Kinh tế chia sẻ giúp tạo ra một phương thức kinh doanh mới, mở ra cơ hội kinh doanh mới dựa trên nền tảng số, ứng dụng công nghệ 4.0.
+\item[•]Kinh tế chia sẻ góp phần tạo nên một thị trường cạnh tranh hơn và loại hình dịch vụ đa dạng hơn, mang lại lợi ích cho người tiêu dùng.
+\item[•] Kinh tế chia sẻ tạo thêm nhiều việc làm cho người lao động, tăng thêm thu nhập.
+\item[•] Kinh tế chia sẻ góp phần làm giảm các chi phí giao dịch trong kinh doanh, thúc đẩy phát triển hệ sinh thái đổi mới sáng tạo và khởi nghiệp ở Việt Nam.
+\item[•] Kinh tế chia sẻ đem lại cơ hội cải cách bộ máy hành chính theo hướng Chính phủ số và
+thúc đẩy cải cách thể chế nhằm phát triển nền kinh tế số và tận dụng xu thế của CMCN 4.0.
+\end{itemize}
+\chapter{Hệ thống kết nối gia sư trực tuyến}
+\section{Khảo sát mô hình gia sư truyền thống và các website gia sư đã có}
+\subsection{Mô hình gia sư truyền thống}
+Đối tượng tham gia mô hình truyền thống:
+\begin{itemize}
+\item[•] Gia sư:  Là đối tượng cung cấp dịch vụ dạy học, có thể là sinh viên hoặc giáo viên các cấp. Đối tượng chủ động đăng ký tìm lớp với các trung tâm gia sư. Khi có lớp phù hợp, trung tâm sẽ liên hệ và sắp xếp lớp. Đây là đối tượng phải chịu toàn bộ chi phí nhận lớp và hầu hết rủi ro nếu có xảy ra.
+\item[•] Trung tâm gia sư: Đóng vai trò trung gian, tìm kiếm phụ huynh/ học sinh và gia sư có nhu cầu. 
+\item[•] Phụ huynh, học sinh, sinh viên: Đối tượng tìm kiếm gia sư. Đối tượng chủ động đăng ký với trung tâm gia sư hoặc được các trung tâm mời chào. Khó có thể chủ động tìm kiếm gia sư phù hợp, phụ thuộc vào danh sách đưa ra từ trung tâm gia sư.
+\end{itemize}
+
+Ưu điểm:
+\begin{itemize}
+\item[•]Dễ triển khai, không yêu cầu hệ thống phức tạp.
+\item[•]Đối với các trung tâm uy tín: Sinh viên và phụ huynh nhận được sự đảm bảo hỗ trợ nhất định:
+\begin{itemize}
+\item[-]Đối với phụ huynh/học sinh: Chất lượng của gia sư tham gia giảng dạy.
+\item[-]Tìm được địa chỉ uy tín để gắn bó, học sinh phù hợp để truyền đạt
+kiến thức.
+\end{itemize}
+\end{itemize}
+
+Nhược điểm: 
+\begin{itemize}
+\item[•]Chi phí cao $30-40\%$ tiền lương tháng đầu tiên.
+\item[•]Bên cạnh các trung tâm gia sư uy tín luôn tồn tại những trung tâm gia sư mang tính chất lừa đảo. Người chịu rủi ro sẽ là các bạn sinh viên, sau khi đóng phí gia sư cho trung tâm, họ không nhận được lớp như mong muốn và nguy cơ mất toàn bộ số tiền đã đóng.
+\item[•]Về mặt thời gian: Tùy theo nhu cầu tìm kiếm gia sư và học sinh cũng như nhân lực của trung tâm, thời gian gia sư tìm được lớp và phụ huynh tìm được gia sư phù hợp sẽ bị ảnh hưởng.
+\item[•]Phụ huynh/ học sinh không chủ động lựa chọn gia sư phù hợp, tất cả đều phải thông qua sự sắp xếp tìm kiếm của trung tâm gia sư.
+\item[•]Các trung tâm thông thường hoạt động lẻ tẻ, không có sự kết nối nguồn lực cung cấp dịch vụ dạy học và những người đang có nhu cầu tìm gia sư. 
+\end{itemize}
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=1]{Image/old_model}
+     Hình 1: Mô hình gia sư truyền thống
+    \end{center}
+\end{center}
+\subsection{Website kết nối gia sư trực tuyến hiện tại}
+Trong những năm gần đây, kết nối gia sư trực tuyến đang ngày càng phổ biến.
+Trên thế giới và cả ở Việt Nam đã xuất hiện các địa chỉ kết nối gia sư trực tuyến và
+đã tạo nên những thành công đáng kể. Trong mục này, em xin khảo sát qua các hệ
+thống đang hoạt động và có lượng thành viên lớn tutorfinder.com.au,
+tutorsfield.com.au, abatutorfinder.com và các trang gia sư tại Việt Nam như
+trungtamdaykem.com, giasuttv.net.\\
+
+Các lĩnh vực, chủ đề mà các trang kết nối gia sư bao gồm:
+\begin{itemize}
+\item[•]Các môn học về khoa học cơ bản: Toán, Lý, Hóa.
+\item[•]Các môn học xã hội cơ bản: Văn, Sử, Địa, Ngoại ngữ.
+\item[•]Các môn học năng khiếu: Âm nhạc, Hội họa.
+\end{itemize}
+
+Các cấp học hệ thống hỗ trợ: Cấp 1, Cấp 2, Cấp 3.\\
+
+Hệ thống website bao gồm ba phần:
+\begin{itemize}
+\item[•]Phần thứ nhất dành cho gia sư, người cung cấp dịch vụ học: Gia sư là những người đã đăng kí thành viên hệ thống và sẽ cung cấp dịch vụ dạy học trên website để các thành viên khác có thể xem và đăng kí học tập. Hệ thống cung cấp cho gia sư các
+chức năng sau:
+\begin{itemize}
+\item[-]Quản lý môn học
+\item[-]Tạo hồ sơ gia sư
+\item[-]Quản lý tài khoản
+\item[-]Liên hệ ban quản trị
+\end{itemize}
+\item[•]Phần thứ hai dành cho phụ huynh/ học sinh /người học: Là những người có nhu cầu cần kèm gia sư. Hệ thống cần cung cấp cho người học các chức năng sau:
+\begin{itemize}
+\item[-]Xem thông tin gia sư
+\item[-]Xem danh sách lớp dạy
+\item[-]Liên hệ
+\end{itemize}
+\item[•]Phần thứ ba dành cho quản trị viên, đây là chức năng hạn chế chỉ dành cho quản trị viên của website nên không thể tiến hành khảo sát.
+\end{itemize}
+\section{Phân tích và thiết kế hệ thống}
+\subsection{Biểu đồ Use Case}
+Hệ thống kết nối gia sư trực tuyến được xây dựng nhằm mục đích kết nối học sinh với gia sư phù hợp. Hệ thống gồm các actor User, Provider, EndUser, Guest và Administrator.\\
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=0.55]{Image/Usecase_Gia_su}
+     Hình 2: Usecase tổng quát hệ thống
+    \end{center}
+\end{center}
+Hệ thống có 4 tác nhân tác động trực tiếp vào hệ thống. Do đó, có thể chia chức
+năng của hệ thống theo từng tác nhân:
+\begin{center}
+\begin{tabular}{| >{\centering\arraybackslash}m{1cm}| >{\centering\arraybackslash}m{3cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+\hline 
+STT & Actor & Ghi chú \\ 
+\hline 
+1 & Guest & Người dùng truy cập vào trang nhưng chưa đăng ký tài khoản, chỉ có khả năng xem thông tin chung và tìm kiếm gia sư \\ 
+\hline 
+2 & EndUser & Người dùng đã đăng ký và kích hoạt tài khoản, có nhu cầu tìm kiếm gia sư phục vụ mục đích học tập\\ 
+\hline 
+3 & Provider & Gia sư hoặc sinh viên  \\ 
+\hline 
+4 & Administrator & Quản trị hệ thống, cập nhật danh mục, phân quyền truy nhập hệ thống, theo dõi nhật ký sử dụng phần mềm \\ 
+\hline 
+\end{tabular} 
+\end{center}
+
+Đối với Khách (Guest) ghé qua Website:
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+\textbf{Use case} & \textbf{Mô tả} \\
+\hline
+Tìm kiếm gia sư & Tìm kiếm các khóa học theo bộ lọc \\ 
+\hline 
+Đăng ký & Đăng ký tài khoản hệ thống \\ 
+\hline 
+Đăng nhập & Đăng nhập vào hệ thống \\ 
+\hline 
+Liên hệ  & Gửi Email thông qua form liên hệ tới ban quản trị \\ 
+\hline 
+ \end{tabular}
+\end{center} 
+
+Đối với gia sư (giáo viên, sinh viên) người cung cấp dịch vụ (Provider):
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+\textbf{Use case} & \textbf{Mô tả} \\
+\hline 
+Quản lý môn học & Quản lý môn học, cấp học và lương tương ứng \\ 
+\hline 
+Tạo hồ sơ gia sư & Quản lý các chứng chỉ, bằng cấp \\ 
+\hline 
+Tin nhắn & Nhắn tin liên hệ trong hệ thống \\ 
+\hline 
+Nạp tiền & Chức năng nạp tiền vào hệ thống thông qua các cổng thanh toán trực tuyến \\ 
+\hline 
+Quản lý tài khoản & Quản lý các thông tin cơ bản của người sử dụng \\ 
+\hline 
+Quản lý tài chính & Thông tin số dư trong tài khoản và lịch sử giao dịch \\ 
+\hline 
+ Quản lý yêu cầu dạy học & Quản lý các yêu cầu dạy học \\ 
+\hline 
+Rút tiền & Rút tiền \\ 
+\hline 
+Liên hệ & Gửi email thông qua form liên hệ tới ban quản trị \\ 
+\hline 
+ \end{tabular}
+\end{center} 
+
+Đối với phụ huynh/ học sinh /người học (EndUser):
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+\textbf{Use case} & \textbf{Mô tả} \\
+\hline 
+ Xem thông tin gia sư & Xem thông tin công khai của gia sư \\ 
+\hline 
+ Tìm kiếm gia sư & Tìm kiếm các khóa học theo bộ lọc \\ 
+\hline 
+ Liên hệ & Gửi email thông qua form liên hệ tới ban quản trị \\ 
+\hline 
+ Quản lý danh sách gia sư yêu cầu & Hiển thị danh sách các yêu cầu gia sư hiện tại \\ 
+\hline 
+Thanh toán & Thanh toán phí  \\ 
+\hline 
+Nạp tiền & Nạp tiền vào hệ thống \\ 
+\hline 
+ Tin nhắn & Nhắn tin trong hệ thống \\ 
+\hline 
+ Xem giao dịch & Xem lịch sử giao dịch \\ 
+\hline 
+Quản lý tài khoản & Quản lý các thông tin cơ bản của người sử dụng \\ 
+\hline 
+Quản lý gia sư yêu thích & Danh sách gia sư quan tâm \\ 
+\hline 
+ Rút tiền & Rút tiền \\ 
+\hline 
+ Quản lý tài chính & Thông tin số dư trong tài khoản \\ 
+\hline 
+\end{tabular}
+ \end{center} 
+ 
+ \newpage
+ Đối với người quản trị hệ thống (Admin):
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+\textbf{Use case} & \textbf{Mô tả} \\
+ \hline 
+ Đăng nhập & Đăng nhập hệ thống \\ 
+ \hline 
+  Quản lý người dùng & Quản lý danh sách người dùng \\ 
+ \hline 
+ Quản lý gia sư & Quản lý danh sách gia sư \\ 
+ \hline 
+ Quản lý khách hàng & Quản lý danh sách khách hàng \\ 
+ \hline 
+  Quản lý đơn hàng & Quản lý danh sách yêu cầu \\ 
+ \hline 
+ Quản lý nội dung & Quản lý danh sách bài viết tại trang chủ \\ 
+ \hline 
+ Báo cáo thống kê & Thống kê hệ thống \\ 
+ \hline 
+ \end{tabular} 
+ \end{center}
+ 
+ \textbf{Actor: Khách (Guest)}\\
+ 
+ Đặc tả Use Case đăng ký
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Đăng ký \\ 
+ \hline 
+ \textbf{Actor} & Khách (Guest) \\ 
+ \hline 
+\textbf{ Mô tả} & Use case cho phép người dùng chưa có tài khoản tạo một tài khoản để trở thành thành viên của hệ thống \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & Người dùng chưa đăng nhập vào hệ thống \\ 
+ \hline 
+ \textbf{Hậu điều kiện} & -Hiển thị thành đăng ký công nếu thông tin hợp lệ
+ 
+ 				 -Báo lỗi khi thông tin cung cấp không hợp lệ  \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. Vào trang web
+ 
+				   2. Bấm vào nút đăng kí
+
+			       3. Form đăng kí hiển thị
+
+				   4. Nhập tên, email, mật khẩu
+				   
+				   5. Hệ thống kiểm tra email đã tồn tại chưa, tên và mật khẩu có hợp lệ
+không
+
+				   6. Nếu đăng kí thành công thì hệ thống gửi email đến email đã 							  đăng kí kèm link xác thực, nếu không thành công chuyển sang                luồng sự kiện rẽ nhánh
+
+				   7. Kết thúc \\ 
+ \hline 
+ \textbf{Luồng sự kiện rẽ nhánh} & Đăng kí không thành công.
+ 
+						1. Hệ thống thông báo quá trình đăng kí không thành công\\ 
+ \hline 
+ \end{tabular} 
+ \end{center}
+ 
+ \newpage
+ Đặc tả Use Case đăng nhập
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Đăng nhập \\ 
+ \hline 
+ \textbf{Actor} & Khách (Guest) \\ 
+ \hline 
+\textbf{ Mô tả} & Use case cho phép người dùng đăng nhập vào hệ thống \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & Người dùng chưa đăng nhập vào hệ thống và đã có tài khoản\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & -Đăng nhập thành công, hệ thống chuyển vào trang chủ
+ 
+ 				 -Hệ thống thông báo lỗi khi thông tin đăng nhập không hợp lệ  \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. Vào trang web
+ 
+				   2. Bấm vào nút đăng nhập
+
+			       3. Hiển thị form đăng nhập
+
+				   4. Nhập email và mật khẩu
+				   
+				   5. Hệ thống kiểm tra email và mật khẩu
+
+				   6. Nếu đăng nhập thành công thì hệ thống xác nhận và chuyển đến giao diện tương ứng. Nếu nhập sai email và mật khẩu thì chuyển sang luồng rẽ nhánh\\ 
+ \hline 
+ \textbf{Luồng sự kiện rẽ nhánh} & Nhân viên đăng nhập không thành công
+ 
+						1. Hệ thống thông báo đăng nhập không thành công
+						
+						2. Hệ thống yêu cầu khách nhập lại email, mật khẩu.
+						
+						3. Khách chọn quay về bước 4 của luồng sự kiện chính hoặc chọn kết thúc đăng nhập\\ 
+ \hline 
+ \end{tabular} 
+ \end{center}
+ 
+ Đặc tả Use Case tìm kiếm gia sư
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Tìm kiếm gia sư \\ 
+ \hline 
+ \textbf{Actor} & Khách (Guest), phụ huynh/học sinh/người học (EndUser) \\ 
+ \hline 
+\textbf{ Mô tả} & Cho phép một người dùng tìm kiếm gia sư \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & Nhấn vào tìm kiếm\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & Đưa ra danh sách gia sư phù hợp \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. Vào trang web
+ 
+				   2. Nhập các thông tin môn học, địa điểm, cấp học
+
+			       3. Click button tìm kiếm
+
+				   4. Hệ thống tìm kiếm và trả về kết quả
+				   
+				   5. Kết thúc\\ 
+ \hline  
+ \end{tabular} 
+ \end{center}
+
+\newpage
+\textbf{ Actor: người dùng (EndUser)}\\
+
+Đặc tả Use Case quản lý gia sư yêu thích
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Quản lý gia sư yêu thích \\ 
+ \hline 
+ \textbf{Actor} & Phụ huynh/học sinh/người học (EndUser) \\ 
+ \hline 
+\textbf{ Mô tả} & Use Case cho phép người dùng lưu lại các gia sư mà họ quan tâm \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & Người dùng truy cập link quản lí danh sách gia sư yêu thích hoặc bấm vào nút quản lí danh sách gia sư yêu thích trên trang web\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & Đưa ra danh sách gia sư yêu thích \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. Thành viên chọn chức năng quản lí danh sách gia sư yêu thích 
+ 
+				   2. Hiển thị danh sách các khóa học trong danh sách gia sư yêu thích
+
+			       3. Bấm nút thêm vào danh sách gia sư yêu thích hoặc xóa khỏi danh sách gia sư yêu thích
+
+				   4. Hệ thống lưu lại thông tin
+				   
+				   5. Kết thúc\\ 
+ \hline  
+ \end{tabular} 
+ \end{center}
+
+Đặc tả Use Case quản lý thông tin cá nhân
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Quản lý gia sư yêu thích \\ 
+ \hline 
+ \textbf{Actor} & User \\ 
+ \hline 
+\textbf{ Mô tả} & Use Case cho phép User xem và chỉnh sửa các thông tin về tài khoản của mình như tên, tiểu sử, mật khẩu, ảnh đại diện... \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & User đã đăng nhập vào hệ thống.
+ 
+						   Thành viên truy cập liên kết chỉnh sửa profile hoặc vào
+trang quản lí tài khoản rồi bấm vào nút chỉnh sửa profile\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & User thay đổi thông tin cá nhân thành công \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. User chọn chức năng chỉnh sửa profile 
+ 
+				   2. User chọn từng mục thông tin cần chỉnh sửa
+
+			       3. Nhập thông tin cần chỉnh sửa và nhấn lưu lại
+
+				   4. Hệ thống thực hiện cập nhật thông tin tài khoản
+				   
+				   5. Kết thúc\\ 
+ \hline  
+ \end{tabular} 
+ \end{center}
+ 
+ \textbf{Use Case quản lý tài chính}
+ \begin{center}
+    \begin{center}
+     \includegraphics[scale=1]{Image/tai_chinh}\\
+     Hình 2: Usecase quản lý tài chính
+    \end{center}
+\end{center}
+
+Chức năng nạp tiền vào hệ thống và kiểm tra các giao dịch đã thực hiện bao gồm: giao dịch nạp tiền, giao dịch yêu cầu gia sư và các giao dịch hoàn tiền.\\
+
+Chức năng được xây dựng thông qua cổng thanh toán trực tuyến tích hợp với
+các ngân hàng nội địa tại Việt Nam
+
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+\hline 
+\textbf{Use case} & \textbf{Mô tả} \\ 
+\hline 
+Quản lý tài chính & Menu quản lý tài chính/Credit \\ 
+\hline 
+Nạp tiền  & Chức năng chọn số tiền nạp, thông tin gói, khi chọn chức năng này hệ thống sẽ chuyển link sang onepay sử lý và gọi link callback khi hoàn thành\\ 
+\hline 
+Kiểm tra lịch sử giao dịch & Các giao dịch đã thực hiện của user \\ 
+\hline 
+\end{tabular}
+ \end{center} 
+ 
+ Đặc tả Use Case nạp tiền
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Nạp tiền \\ 
+ \hline 
+ \textbf{Actor} & User \\ 
+ \hline 
+\textbf{ Mô tả} & Chức năng chọn số tiền nạp, thông tin gói, khi chọn chức năng này hệ thống sẽ chuyển link sang viettel pay sử lý và gọi link callback khi hoàn thành \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & User truy cập chức năng quản lý tài chính từ menu
+ 
+						   Điều kiện tiên quyết: User đã đăng nhập vào hệ thống\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & User nạp tiền thành công, hệ cập nhật tài khoản
+ 
+ Nếu phát sinh lỗi, hệ thống thông báo tới người dùng \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. User chọn menu quản lý tài chính
+ 
+				   2. User chức năng nạp tiền
+
+			       3. User chọn mệnh giá cần nạp
+
+				   4. Hệ thống nhận kết quả trả về từ onepay và cập nhật số dư người dùng.
+				   
+				   5. Kết thúc\\ 
+ \hline  
+ \end{tabular} 
+ \end{center}
+ 
+ Đặc tả Use Case kiểm tra lịch sử giao dịch
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Kiểm tra lịch sử giao dịch \\ 
+ \hline 
+ \textbf{Actor} & User \\ 
+ \hline 
+\textbf{ Mô tả} & Cho phép User xem thông tin các giao dịch \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & User truy cập chức năng quản lý lịch sử giao dịch\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & User hoàn thành xem thông tin lịch sử giao dịch \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. User chọn menu quản lý lịch sử giao dịch
+ 
+				   2. Hệ thống trả về kết quả lịch sử giao dịch
+
+			       3. Kết thúc\\ 
+ \hline  
+ \end{tabular} 
+ \end{center}
+ 
+\newpage 
+ Use case quản lý yêu cầu dạy học dành cho Provider
+ 
+ \begin{center}
+    \begin{center}
+     \includegraphics[scale=1]{Image/provider_function}\\
+     Hình 3: Usecase quản lý yêu cầu dạy học dành cho Provider
+    \end{center}
+\end{center}
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+\hline 
+\textbf{Use case} & \textbf{Mô tả} \\ 
+\hline 
+Quản lý yêu cầu dạy học & Quản lý yêu cầu dạy học \\ 
+\hline 
+Hủy yêu cầu  & Hủy yêu cầu\\ 
+\hline 
+Chấp nhận yêu cầu & Chấp nhận yêu cầu \\ 
+\hline
+Liên hệ qua tin nhắn & Liên hệ qua tin nhắn \\ 
+\hline 
+\end{tabular}
+ \end{center} 
+ 
+ Đặc tả Use Case quản lý yêu cầu dạy học
+ 
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Quản lý yêu cầu dạy học \\ 
+ \hline 
+ \textbf{Actor} & Provider \\ 
+ \hline 
+\textbf{ Mô tả} & Chức năng cho phép provider quản lý các yêu cầu dạy học
+được gửi từ học viên. \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & Provider truy cập menu quản lý yêu cầu dạy học\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & User hoàn thành xem thông tin yêu cầu dạy học  \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. User chọn chức năng quản lý yêu cầu dạy học.
+ 
+				   2. Hệ thống trả về danh sách các yêu cầu dạy hiện có.
+
+			       3.  Provider chấp nhận yêu cầu dạy học.
+
+				   4. Hệ thống thực hiện cập nhật trạng thái của yêu cầu\\ 
+ \hline 
+ \textbf{Luồng sự kiện rẽ nhánh} & Provider từ chối yêu cầu dạy học
+ 
+						Hệ thống chuyển sang bước 4\\ 
+ \hline 
+ \end{tabular} 
+ \end{center}
+ 
+ \newpage
+ User case Xem danh sách review
+ 
+ \begin{center}
+    \begin{center}
+     \includegraphics[scale=0.7]{Image/review}\\
+     Hình 4: Usecase xem danh sách review
+    \end{center}
+\end{center}
+
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} & Xem hồ sơ gia sư \\ 
+ \hline 
+ \textbf{Actor} & User \\ 
+ \hline 
+\textbf{ Mô tả} & Cho phép thành viên viết đánh giá về gia sư, rating
+khóa học trên thang điểm 5 sao \\ 
+ \hline 
+ \textbf{Tiền điều kiện} & Thành viên vào trang xem trang thông tin gia sư và bấm
+vào nút “Đánh Giá”\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & Thành viên đánh giá về một khóa học đã học qua, lấy làm thông tin đánh giá khách quan về khóa học. \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. Thành viên xem trang thông tin gia sư
+ 
+				   2. Bấm vào nút Đánh giá
+
+			       3. Nhập nội dung đánh giá và chọn thang điểm
+			       
+			       4. Nhấn nút gửi đánh giá
+			       
+			       5. Hệ thống lưu lại đánh giá
+			       
+			       6. Kết thúc\\ 
+ \hline  
+ \end{tabular} 
+ \end{center}
+ 
+ \newpage
+ \textbf{Actor: Administrator}
+ 
+ \begin{center}
+    \begin{center}
+     \includegraphics[scale=0.7]{Image/Admin}\\
+     Hình 5: Usecase quản trị hệ thống
+    \end{center}
+\end{center}
+
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+\hline 
+\textbf{Use case} & \textbf{Mô tả} \\ 
+\hline 
+Quản lý gia sư & Quản lý gia sư \\ 
+\hline 
+Xem chi tiết thông tin  & Xem chi tiết thông tin gia sư\\ 
+\hline 
+Sửa thông tin & Sửa thông tin gia sư \\ 
+\hline
+Thay đổi trạng thái gia sư & Thay đổi trạng thái gia sư \\ 
+\hline 
+Quản lý khách hàng & Quản lý khách hàng \\ 
+\hline 
+Xem chi tiết thông tin  & Xem chi tiết thông tin khách hàng \\ 
+\hline 
+Sửa thông tin   & Sửa thông tin khách hàng \\ 
+\hline 
+Thay đổi trạng thái khách hàng   & Thay đổi trạng thái khách hàng \\ 
+\hline
+Quản lý yêu cầu kích hoạt   & Hiển thị danh sách các yêu cầu kích hoạt
+tài khoản từ gia sư \\ 
+\hline 
+Xem yêu cầu    & Hiển thị chi tiết thông tin của gia sư yêu
+cầu kích hoạtg \\ 
+\hline
+Chấp nhận yêu cầu   & Duyệt tài khoản gia sư \\ 
+\hline
+Yêu cầu bổ sung thông tin    & Gửi yêu cầu bổ sung thông tin đến tài
+khoản gia sư \\ 
+\hline 
+\end{tabular}
+ \end{center} 
+
+\newpage
+ Đặc tả Use Case xem danh sách EndUser và Provider
+ 
+ \begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|>{\raggedright\arraybackslash}m{11.5cm}|}
+ \hline 
+ \textbf{Tên Use-case} &  Xem danh sách EndUser và Provider \\ 
+ \hline 
+ \textbf{Actor} & Admin \\ 
+ \hline 
+\textbf{ Mô tả} & Cho phép admin xem danh sách các tài khoản thành viên tham gia hệ thống, bao gồm cả admin và thành viên thông thường\\ 
+ \hline 
+ \textbf{Tiền điều kiện} & Tài khoản đã đăng nhập hệ thống và được cấp quyền admin.\\ 
+ \hline 
+ \textbf{Hậu điều kiện} & Admin xem được danh sách các thành viên tham gia hệ
+thống, có thể tùy chỉnh bộ lọc để xem danh sách theo ý mình \\ 
+ \hline 
+ \textbf{Luồng điều kiện} & 1. Admin vào trang “Quản lí thành viên”
+ 
+				   2. Hệ thống lấy danh sách thành viên trong database
+
+			       3. Hiển thị danh sách các thành viên
+			       
+			       4. Kết thúc\\ 
+ \hline  
+ \end{tabular} 
+ \end{center}
+\subsection{Biểu đồ hoạt động}
+
+\textbf{Biểu đồ hoạt động Use Case Đăng Kí}\\
+
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=1]{Image/activity_register}\\
+     Hình 6: Biểu đồ hoạt động đăng ký tài khoản
+    \end{center}
+\end{center}
+
+\newpage
+\textbf{Biểu đồ hoạt động Use Case đăng nhập}\\
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=1]{Image/activity_login}\\
+     Hình 7: Biểu đồ hoạt động quản lý danh sách yêu cầu dạy của gia sư
+    \end{center}
+\end{center}
+
+\newpage
+\textbf{Biểu đồ hoạt động tìm kiếm và gửi yêu cầu gia sư}
+
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=0.7]{Image/activity_request_gs}\\
+     Hình 8: Biểu đồ hoạt động tìm kiếm và gửi yêu cầu gia sư
+    \end{center}
+\end{center}
+
+Khi người dùng vào trang chủ, người dùng chọn môn học cần tìm gia sư, cài đặt các thông số như địa điểm, giá tiền… sau đó hệ thống đưa gia các gia sư phù hợp. Người dùng duyệt danh sách được gợi ý và đưa ra các lựa chọn, xem thông tin gia sư, nhắn tin cho gia sư hoặc lưu vào danh sách quan tâm.Nếu người dùng truy cập vào trang xem thông tin gia sư, người dùng có thể tiến hành gửi yêu cầu dạy tới gia sư.\\
+
+ \textbf{Biểu đồ hoạt động xem yêu cầu của gia sư}\\
+ 
+Khi người dùng vào trang quản lý các yêu cầu, gia sư có thể xem các thông số như địa điểm, giá tiền… của yêu cầu dạy. Gia sư có thể chọn 1 trong các hành động nhắn tin cho người yêu cầu để trao đổi thêm, đồng ý yêu cầu hoặc từ chối yêu cầu dạy\\
+
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=0.7]{Image/activity_check_request}\\
+     Hình 9: Biểu đồ hoạt động quản lý danh sách yêu cầu dạy của gia sư
+    \end{center}
+\end{center}
+
+\textbf{Biểu đồ hoạt động gửi yêu cầu duyệt hồ sơ}\\
+
+Khi người dùng gửi yêu cầu duyệt hồ sơ, chương trình thay đổi trạng thái của
+tài khoản trở thành “Wait active”.\\
+
+Quản trị viên sau khi đăng nhập vào hệ thống quản trị có thể xem trạng thái
+của các user và lọc ra các user đang ở trạng thái chờ kích hoạt. Sau khi kích hoạt
+thành công, trạng thái tài khoản chuyển thành “Full active”.
+
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=.92]{Image/activity_Verify}\\
+     Hình 10: Biểu đồ hoạt động duyệt hồ sơ gia sư của admin
+    \end{center}
+\end{center}
+
+\newpage
+\section{Thiết kế cơ sở dữ liệu}
+\begin{center}
+    \begin{center}
+     \includegraphics[scale=.6]{Image/DataBase}\\
+     Hình 11: Thiết kế cơ sở dữ liệu
+    \end{center}
+\end{center}
+\newpage
+\textbf{Bảng thông tin người dùng}
+\begin{center}
+	\begin{tabular}{|>{\raggedright\arraybackslash}m{3.5cm}|>{\raggedright\arraybackslash}m{5cm}|>{\raggedright\arraybackslash}m{3.6cm}| >{\centering\arraybackslash}m{1cm}| >{\centering\arraybackslash}m{1cm}|}
+\hline 
+\textbf{Tên trường} & \textbf{Mô tả} & \textbf{Kiểu dữ liệu} & \textbf{Null} & \textbf{Khóa} \\ 
+\hline 
+UserID & ID người dùng & CHAR(36) &  & PK \\ 
+\hline 
+Name & Tên người dùng & NVARCHAR(100) &  &  \\ 
+\hline 
+Email & Email người dùng & NVARCHAR(100) &  &  \\ 
+\hline 
+Password & Mật khẩu & NVARCHAR(100) &  &  \\ 
+\hline 
+Birthday & Ngày sinh & Datetime & X &  \\ 
+\hline 
+Avatar & Ảnh đại diện & TEXT & X &  \\ 
+\hline 
+Gender & Giới tính 
+
+		(0: Nữ, 1:Nam, 2:Khác) & INT & X &  \\ 
+\hline 
+School & Trường đang công tác hoặc học tập & NVARCHAR(100) & X &  \\ 
+\hline 
+Job & Nghề nghiệp & NVARCHAR(100) & X &  \\ 
+\hline 
+Address & Địa chỉ đầy đủ & TEXT & X &  \\ 
+\hline 
+Address$\_$number & Số nhà & NVARCHAR(100) & X &  \\ 
+\hline 
+Address$\_$street & Tên phố & NVARCHAR(100) & X &  \\ 
+\hline 
+About$\_$me & Giới thiệu bản thân & TEXT & X &  \\ 
+\hline 
+National$\_$ID & Số CMND & NVARCHAR(100) & X &  \\ 
+\hline 
+Front$\_$national$\_$ID &  Ảnh mặt trước CMND& TEXT & X &  \\ 
+\hline 
+Back$\_$national$\_$ID & Ảnh mặt sau CMND & TEXT & X &  \\ 
+\hline 
+Status & Trạng thái tài khoản & INT &  &  \\ 
+\hline 
+Type$\_$account & Loại tài khoản & INT &  &  \\ 
+\hline 
+Balance & Số dư của tài khoản & INT &  &  \\ 
+\hline 
+	\end{tabular} 
+\end{center}
+
+\textbf{Bảng  review: Lưu trữ nội dung các đánh giá của người dùng cuối (EndUser) tới gia sư/người cung cấp dịch vụ (Provider)}
+
+\begin{center}
+\begin{tabular}{|>{\raggedright\arraybackslash}m{3.5cm}|>{\raggedright\arraybackslash}m{5cm}|>{\raggedright\arraybackslash}m{3.6cm}| >{\centering\arraybackslash}m{1cm}| >{\centering\arraybackslash}m{1cm}|}
+\hline 
+\textbf{Tên trường} & \textbf{Mô tả} & \textbf{Kiểu dữ liệu} & \textbf{Null} & \textbf{Khóa} \\ 
+\hline 
+ReviewID & ID của review & INT &  & PK \\ 
+\hline 
+Review$\_$from & ID của user đăng review & CHAR(36) &  & FK \\ 
+\hline 
+Review$\_$to & ID của provider nhận review & CHAR(36) &  & FK \\ 
+\hline 
+Review$\_$point & Điểm đánh giá & Float &  &  \\ 
+\hline 
+Review$\_$content & Nội dung đánh giá & TEXT &  &  \\ 
+\hline 
+\end{tabular} 
+\end{center}
+
+\newpage
+\textbf{Bảng Provider: Các thông tin bổ sung của provider}
+\begin{center}
+\begin{tabular}{|>{\raggedright\arraybackslash}m{3.5cm}|>{\raggedright\arraybackslash}m{5cm}|>{\raggedright\arraybackslash}m{3.6cm}| >{\centering\arraybackslash}m{1cm}| >{\centering\arraybackslash}m{1cm}|}
+\hline 
+\textbf{Tên trường} & \textbf{Mô tả} & \textbf{Kiểu dữ liệu} & \textbf{Null} & \textbf{Khóa} \\ 
+\hline
+UserID & ID của gia sư & CHAR(36) &  & PK,
+
+FK \\ 
+\hline 
+Class$\_$level & Cấp học gia sư có thể dạy, nhân một trong các giá trị sau:
+
+0: Mẫu giáo
+
+1: Học sinh cấp 1
+
+2: Học sinh cấp 2
+
+3: Học sinh cấp 3
+
+4: Đại học & TEXT &  &  \\ 
+\hline 
+Subject & Môn học & TEXT &  &  \\
+\hline 
+Salary & Lương yêu cầu & INT &  &  \\  
+\hline 
+Review$\_$point & Điểm đánh giá trung bình từ EndUser & Float & X &  \\ 
+\hline 
+Review$\_$count & Số lượng đánh giá & INT & X &  \\ 
+\hline 
+Experience & Mô tả kinh nghiệm giảng dạy & TEXT & X &  \\ 
+\hline 
+Qualification & Bằng cấp hoặc bảng điểm của gia sư & TEXT & X &  \\ 
+\hline 
+Type$\_$qualification & Nhận 1 trong các giá trị sau:
+
+0. Sinh viên
+
+1. Giáo viên cấp 1
+
+2. Giáo viên cấp 2
+
+3. Giáo viên cấp 3
+
+4. Cử nhân
+
+5. Thạc sĩ
+
+6. Tiến sĩ & INT & X &  \\ 
+\hline
+\end{tabular} 
+\end{center}
+
+\textbf{Bảng LearningRequest: Yêu cầu dạy học}
+
+\begin{center}
+\begin{tabular}{|>{\raggedright\arraybackslash}m{3.5cm}|>{\raggedright\arraybackslash}m{5cm}|>{\raggedright\arraybackslash}m{3.6cm}| >{\centering\arraybackslash}m{1cm}| >{\centering\arraybackslash}m{1cm}|}
+\hline 
+\textbf{Tên trường} & \textbf{Mô tả} & \textbf{Kiểu dữ liệu} & \textbf{Null} & \textbf{Khóa} \\ 
+\hline 
+LearningRequestID & ID  & INT &  & PK \\ 
+\hline 
+CustomerID & ID của EndUser gửi yêu cầu dạy & CHAR(36) &  & FK \\ 
+\hline 
+ProviderID & ID của provider được nhận yêu cầu dạy & CHAR(36) &  & FK \\ 
+\hline 
+Class$\_$level & Cấp học gia sư có thể dạy, nhân một trong các giá trị sau:
+
+0: Mẫu giáo
+
+1: Học sinh cấp 1
+
+2: Học sinh cấp 2
+
+3: Học sinh cấp 3
+
+4: Đại học & TEXT &  &  \\ 
+\hline 
+Subject & Môn học & TEXT &  &  \\
+\hline 
+Salary & Lương yêu cầu & INT &  &  \\  
+\hline 
+Status & Trạng thái yêu càu & INT &  &  \\ 
+\hline 
+\end{tabular} 
+\end{center}
+
+\newpage
+\textbf{Bảng BalanceHistory: lịch sử giao dịch của tài khoản}
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{3.5cm}|>{\raggedright\arraybackslash}m{5cm}|>{\raggedright\arraybackslash}m{3.6cm}| >{\centering\arraybackslash}m{1cm}| >{\centering\arraybackslash}m{1cm}|}
+\hline 
+\textbf{Tên trường} & \textbf{Mô tả} & \textbf{Kiểu dữ liệu} & \textbf{Null} & \textbf{Khóa} \\ 
+\hline 
+BalanceHistoryID & ID & INT &  & PK \\ 
+\hline 
+Type & Loại giao dịch, nhận một trong các giá trị sau: 
+
+0: Nạp tiền
+
+1: Trừ tiền
+
+2: Hoàn trả& INT &  &  \\ 
+\hline 
+Description & Mô tả/nội dung giao dịch & TEXT &  &  \\ 
+\hline 
+Amount & Số tiền giao dịch & INT &  &  \\ 
+\hline 
+Status & Trạng thái giao dịch nhận một trong các giá trị sau:
+
+0: Thất bại
+
+1: Pending
+
+2: Thành công & INT &  &  \\ 
+\hline 
+UserID & ID người dùng & CHAR(36) &  & FK \\ 
+\hline 
+\end{tabular}
+ \end{center} 
+ 
+\textbf{ Bảng Message}
+
+\begin{center}
+ \begin{tabular}{|>{\raggedright\arraybackslash}m{3.5cm}|>{\raggedright\arraybackslash}m{5cm}|>{\raggedright\arraybackslash}m{3.6cm}| >{\centering\arraybackslash}m{1cm}| >{\centering\arraybackslash}m{1cm}|}
+\hline 
+\textbf{Tên trường} & \textbf{Mô tả} & \textbf{Kiểu dữ liệu} & \textbf{Null} & \textbf{Khóa} \\ 
+\hline 
+MessageID & ID & INT &  & PK \\ 
+\hline 
+SenderID & ID của người gửi & CHAR(36) & & FK \\ 
+\hline 
+ReceiverID & ID của người nhận & CHAR(36) &  & FK \\ 
+\hline 
+Status & Trạng thái tin nhắn nhận một trong các giá trị sau:
+
+0: Không gửi được tin nhắn
+
+1: Gửi thành công & INT &  &  \\ 
+\hline 
+Content & Nội dung tin nhắn & TEXT &  &  \\ 
+\hline 
+\end{tabular}
+ \end{center} 
+ 
+\section{Đề xuất giải pháp ứng dụng công nghệ mới}
+\section{Cài đặt chương trình}
+\chapter*{Phần kết luận}
+\addcontentsline{toc}{chapter}{Phần kết luận}
+\chapter*{Danh mục tài liệu tham khảo}
+\addcontentsline{toc}{chapter}{Danh mục tài liệu tham khảo}
+[1].Trần Thị Hằng, 2019. \textit{Phát triển kinh tế chia sẻ tại Việt Nam trong bối cảnh cách mạng công nghiệp 4.0 và một số khuyến nghị}.\\
+
+[2].Judith Wallenstein and Urvesh Shelat, 2017. \textit{Hoping aboard the sharing
+economy}. The Boston Consulting Group.\\
+
+[3].Tạp chí Khoa học và Công nghệ Việt Nam điện tử, 17/01/2020. \textit{Kinh tế chia sẻ: Thực trạng và giải pháp}\\
+
+[4].Cafebiz, 10/07/2019. \textit{Dư tiền để "đốt" trong 15 năm, Grab đang được và mất gì trên mỗi cuốc xe}.
+\end{document}
