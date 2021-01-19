@@ -1,0 +1,262 @@
+﻿
+@{
+    ViewBag.Title = "ListApplication";
+    Layout = "~/Areas/EndUser/Views/Shared/_EndUser_LayOut.cshtml";
+}
+
+<h2>Danh sách sinh viên ứng tuyển</h2>
+<div id="m-content">
+
+
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            LoadData();
+        });
+
+        // Click chấp nhận
+        $('#m-content').on('click', "button[name='accept']", function () {
+            var requirementId = $(this).closest('tbody').attr('id');
+            var tutorId = $(this).attr('tutorId');
+
+            // Chuyển trạng thái status của gia sư được chấp nhận thành 1, các gia sư còn lại thành 2
+            $.ajax({
+                url: '/EndUser/Home/UpdateApplicationStatus',
+                type: 'post',
+                data: {
+                    requirementId: requirementId,
+                    tutorId: tutorId,
+                    status: 1
+                },
+            })
+
+            // Trả tiền cho các gia sư có trạng thái là 2
+            $.ajax({
+                url: '/EndUser/Home/ApplicationByRequirementId',
+                type: 'get',
+                data: {
+                    requirementId: requirementId
+                }, success: function (data) {
+
+                    debugger
+                    if (data.code == 200) {
+
+                        $.ajax({
+                            url: '/EndUser/Home/UpdateTutorNumber',
+                            type: 'post',
+                            data: {
+                                requirementId: requirementId,
+                                tutorNumber: 0
+                            }
+                        });
+
+                        $.each(data.application, function (key, val) {
+                            var costAdmin = val["CostAdmin"];
+                            var accountBalance = val["AccountBalance"] + costAdmin;
+                            var id = val["TutorId"];
+                            $.ajax({
+                                url: '/EndUser/Home/UpdateTutorBalance',
+                                type: 'post',
+                                data: {
+                                    tutorId: id,
+                                    accountBalance: accountBalance
+                                },
+                            })
+
+                            $.ajax({
+                                url: '/EndUser/Home/UpdateApplicationStatus',
+                                type: 'post',
+                                data: {
+                                    requirementId: requirementId,
+                                    tutorId: id,
+                                    status: 2
+                                },
+                            })
+                        });
+
+                        debugger
+                        $.ajax({
+                            url: '/EndUser/Home/UpdataStatusRequirement',
+                            type: 'post',
+                            data: {
+                                requirementId: requirementId,
+                                status: 2
+                            },
+                            success: function (data) {
+                                if (data.code == 200) {
+                                    alert('Xác nhận gia sư thành công.')
+                                    LoadData();
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+            // Chuyển trạng thái của yêu cầu gia sư thành 2 (thành công)
+
+
+            // Load lại dữ liệu
+
+        });
+
+        // Click từ chối yêu cầu
+        $('#m-content').on('click', "button[name='delete']", function () {
+            var requirementId = $(this).closest('tbody').attr('id');
+            var tutorId = $(this).attr('tutorId');
+            
+
+            var result = confirm("Xác nhận từ chối ứng tuyển của gia sư?");
+            if (result) {
+
+                $.ajax({
+                    url: '/EndUser/Home/ApplicationByRequirementId',
+                    type: 'get',
+                    data: {
+                        requirementId: requirementId
+                    }, success: function (data) {
+
+                        if (data.code == 200) {
+
+                            var tutorNumber = data.application[0]["TutorNumber"] - 1;
+
+                            // Giảm số lượng đề nghị 1
+                            $.ajax({
+                                url: '/EndUser/Home/UpdateTutorNumber',
+                                type: 'post',
+                                data: {
+                                    requirementId: requirementId,
+                                    tutorNumber: tutorNumber
+                                }
+                            });
+                            $.each(data.application, function (key, val) {
+                                var costAdmin = val["CostAdmin"];
+                                var accountBalance = val["AccountBalance"] + costAdmin;
+                                var id = val["TutorId"];
+                                if (id == tutorId) {
+                                    $.ajax({
+                                        url: '/EndUser/Home/UpdateTutorBalance',
+                                        type: 'post',
+                                        data: {
+                                            tutorId: id,
+                                            accountBalance: accountBalance
+                                        },
+                                        success: function (data) {
+                                            if (data.code == 200) {
+                                                alert('Từ chối yêu cầu gia sư thành công!');
+                                            }
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    }
+                })
+
+                // Chuyển trạng thái gia sư bị từ chối thành 2 (thất bại)
+                $.ajax({
+                    url: '/EndUser/Home/UpdateApplicationStatus',
+                    type: 'post',
+                    data: {
+                        requirementId: requirementId,
+                        tutorId: tutorId,
+                        status: 2
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            LoadData();
+                        }
+                    }
+                })
+
+                // Load lại dữ liệu
+            }
+            
+        });
+
+
+        function LoadData() {
+            var endUserId = @ViewBag.EndUserId;
+            // Lấy danh sách yêu cầu của phụ huynh
+            $.ajax({
+                url: '/EndUser/Home/RequirementByEndUserId',
+                type: 'get',
+                data: {
+                    endUserId: endUserId
+                },
+                success: function (data) {
+
+                    // Nếu thành công thì tạo panel
+                    if (data.code == 200) {
+                        $('#m-content').empty();
+                        $.each(data.requirement, function (key, val) {
+                            var requirementId = val["RequirementId"];
+                            var pnl = `<div class="panel panel-primary">
+                                    <div class="panel-heading">${val["SubjectName"]} ${val["GradeName"]}</div>
+                                    <div class="panel-body">
+                                        <table id="mytable" class="table table-bordred table-striped">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>Họ tên gia sư</th>
+                                                    <th>Nghề nghiệp</th>
+                                                    <th>Giới tính</th>
+                                                    <th>Email</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Đánh giá</th>
+                                                    <th>Chấp nhận</th>
+                                                    <th>Từ chối</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id=${val["RequirementId"]}>
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>`;
+                            $('#m-content').append(pnl);
+
+                            // Lấy danh sách sinh viên ứng tuyển lớp đang xét
+
+                            $.ajax({
+                                url: '/EndUser/Home/ApplicationByRequirementId',
+                                type: 'get',
+                                data: {
+                                    requirementId: requirementId
+                                },
+                                success: function (data_2) {
+                                    if (data_2.code == 200) {
+                                        $.each(data_2.application, function (index, item) {
+                                            var gender = "";
+                                            switch (item["Gender"]) {
+                                                case 0: gender = "Nữ"; break;
+                                                case 1: gender = "Nam"; break;
+                                                default: gender = "Không xác định";
+                                            }
+                                            var tr = `<tr>
+                                                    <td>${item["TutorName"]}</td>
+                                                    <td>${item["TutorJob"]}</td>
+                                                    <td>${gender}</td>
+                                                    <td>${item["TutorEmail"]}</td>
+                                                    <td>${item["TutorPhoneNumber"]}</td>
+                                                    <td><span>${item["Point"]}</span> <i class="fas fa-star" style="color:#fbd505"></i></td>
+                                                    <td><p data-placement="top" data-toggle="tooltip" title="Chấp nhận"><button tutorId="${item["TutorId"]}" name="accept" class="btn btn-success btn-xs" data-title="Chấp nhận" data-toggle="modal" data-target="#edit"><i class="fas fa-check"></i></button></p></td>
+                                                    <td><p data-placement="top" data-toggle="tooltip" title="Từ chối"><button tutorId="${item["TutorId"]}" name="delete" class="btn btn-danger btn-xs" data-title="Từ chối" data-toggle="modal" data-target="#delete"><i class="fas fa-trash-alt"></i></button></p></td>
+                                                </tr>`;
+                                            $(`#${requirementId}`).append(tr)
+                                        })
+                                    }
+                                }
+                            })
+                        })
+                    }
+                }
+            })
+        }
+    </script>
+} 
+
+

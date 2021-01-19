@@ -1,0 +1,459 @@
+﻿
+@{
+    ViewBag.Title = "ListRequirement";
+    Layout = "~/Areas/Tutor/Views/Shared/_Tutor_LayOut.cshtml";
+}
+
+<div style="margin-left: 16px;
+        background-color: #ffffff;
+        width: 100%;
+        padding: 24px;
+        border-radius: 9px;
+        margin-top: 16px;">
+    <div class="row" style="margin-left:0px; margin-right:0px;">
+        <h3>Lớp học tìm gia sư</h3>
+    </div>
+    <div class="row" style="margin-top: 10px; margin-bottom: 16px;">
+        <div class="col-sm-3">
+            <select id="m-location" name="selectbasic" class="form-control">
+                <option value="0">Chọn địa điểm</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <select id="m-subject" name="selectbasic" class="form-control">
+                <option value="0">Chọn môn học</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <select id="m-grade" name="selectbasic" class="form-control">
+                <option value="0">Chọn lớp</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <button id="m-btn-search" style="background-color: #47a7fd; border-color: #47adff;" name="singlebutton" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+                Tìm khóa học
+            </button>
+        </div>
+    </div>
+    <br />
+</div>
+
+<div class="box">
+    <div class="container">
+        <div class="row" id="m-list-requirement">
+
+        </div>
+    </div>
+</div>
+
+<!--Modal detail requirement-->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="m-model_detail">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style=" height: 120px; display: flex;">
+                <div style="height: 100px; width: 100px; text-align: center;"><i style="font-size: 70px; color: #15aabf;" class="fas fa-chalkboard-teacher"></i></div>
+                <div id="m-title-detail" style="height: 100px; padding-left: 20px;">
+
+                </div>
+            </div>
+            <div class="modal-body" id="m-detail-r1" style="display: flex; padding-left: 25px;">
+
+            </div>
+
+            <div class="modal-body" id="m-detail-r2" style="display: flex; padding-left: 25px;">
+
+            </div>
+
+            <div class="modal-footer" id="m-description" style="text-align:left">
+
+            </div>
+            <div class="modal-footer">
+                <input hidden id="m-txt-requirementId" />
+                <button type="button" class="btn btn-primary" id="m-btn-submit">Gửi yêu cầu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background: #eee;
+    }
+
+    span {
+        font-size: 15px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #0062cc;
+        border-bottom: 2px solid #0062cc;
+    }
+
+    .box {
+        padding: 16px 0px;
+    }
+
+    .box-part {
+        background: #FFF;
+        border-radius: 10px;
+        padding: 60px 10px;
+        margin: 30px 0px;
+    }
+
+    .text {
+        margin: 20px 0px;
+    }
+
+    .fa {
+        color: #4183D7;
+    }
+
+    .navbar-brand {
+        height: 52px;
+    }
+</style>
+
+@section scripts{
+    <script>
+        $(document).ready(function(){
+            LoadData();
+        });
+
+        function LoadData() {
+            $.ajax({
+                url: '/EndUser/Home/Grade',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#m-grade').empty();
+                        $.each(data.grade, function (k, v) {
+                            var option = `<option value="${v["GradeId"]}">${v["GradeName"]}</option>`;
+                            $('#m-grade').append(option);
+                        });
+
+                    }
+                }
+            })
+            $.ajax({
+                url: '/EndUser/Home/Subject',
+                type: 'get',
+                success: function (data) {
+                    $('#m-subject').empty();
+                    if (data.code == 200) {
+                        $.each(data.subject, function (k, v) {
+                            var option = `<option value="${v["SubjectId"]}">${v["SubjectName"]}</option>`;
+                            $('#m-subject').append(option);
+                        });
+                    }
+                }
+            })
+
+            $.ajax({
+                url: '/EndUser/Home/Location',
+                type: 'get',
+                success: function (data) {
+                    $('#m-location').empty();
+                    if (data.code == 200) {
+                        $.each(data.location, function (key, val) {
+                            var option = `<option value="${val["LocationID"]}">${val["LocationName"]}</option>`;
+                            $('#m-location').append(option);
+                        });
+                    }
+                }
+            })
+
+            // Load sách yêu cầu gia sư
+            $.ajax({
+                url: '/EndUser/Home/RequirementJson',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#m-list-requirement').empty();
+                        $.each(data.requirement, function (key, val) {
+                            var div = `
+                            <div  class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="${val["RequirementId"]}">
+                                <div class="box-part text-center">
+
+                                    <i style="font-size: 55px; color: #15aabf;" class="fas fa-chalkboard-teacher"></i>
+
+                                    <div class="title" style="color: #006fa7; font-weight: bold;">
+                                        <h3>${val["SubjectName"]} ${val["GradeName"]}</h3>
+                                    </div>
+
+                                    <div class="text" style="font-size: 12px;">
+                                        <span>${SloveText(val["RequirementDetail"])}</span>
+                                    </div>
+                                    <div>
+                                        <b style="color:#dc3545; font-size:18px;">${val["Tuition"]} ₫</b>
+                                        <small>/buổi</small>
+                                    </div>
+                                    <div>
+                                        <b style="color: #9dc6fb;font-size: 18px;">${val["CostAdmin"]} ₫</b>
+                                        <small>phí nhận lớp</small>
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <span style="color: #80808F;">Đã có ${val["TutorNumber"]} đề nghị dạy</span>
+                                    </div>
+
+                                    <button class="btn btn-info" id="${val["RequirementId"]}">Chi tiết</button>
+
+                                </div>
+                            </div>`;
+                            $('#m-list-requirement').append(div);
+                        })
+                    }
+                }
+            })
+        }
+
+        $('#m-btn-search').click(function () {
+            // Lấy dữ liệu
+            var subjectId = $('#m-subject').find(':selected').val();
+            var gradeId = $('#m-grade').find(':selected').val();
+            var locationId = $('#m-location').find(':selected').val();
+
+            // Load dữ liệu
+            $.ajax({
+                url: '/EndUser/Home/RequirementSearch',
+                type: 'get',
+                data: {
+                    subjectId: subjectId,
+                    gradeId: gradeId,
+                    locationId: locationId
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#m-list-requirement').empty();
+                        $.each(data.requirement, function (key, val) {
+                            var div = `
+                            <div  class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="box-part text-center">
+
+                                    <i style="font-size: 55px; color: #15aabf;" class="fas fa-chalkboard-teacher"></i>
+
+                                    <div class="title" style="color: #006fa7; font-weight: bold;">
+                                        <h3>${val["SubjectName"]} ${val["GradeName"]}</h3>
+                                    </div>
+
+                                    <div class="text" style="font-size: 12px;">
+                                        <span>${val["RequirementDetail"]}</span>
+                                    </div>
+                                    <div>
+                                        <b style="color:#dc3545; font-size:18px;">${val["Tuition"]} ₫</b>
+                                        <small>/buổi</small>
+                                    </div>
+                                    <div>
+                                        <b style="color: #9dc6fb;font-size: 18px;">${val["CostAdmin"]} ₫</b>
+                                        <small>phí nhận lớp</small>
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <span style="color: #80808F;">Đã có ${val["TutorNumber"]} đề nghị dạy</span>
+                                    </div>
+
+                                    <button class="btn btn-info" id="${val["RequirementId"]}">Chi tiết</button>
+
+                                </div>
+                            </div>`;
+                            $('#m-list-requirement').append(div);
+                        })
+                    }
+                }
+            })
+        });
+
+        $('#m-list-requirement').on('click', 'button', function () {
+            var requirementId = $(this).attr('id');
+            $.ajax({
+                url: '/EndUser/Home/RequirementDetail',
+                type: 'get',
+                data: {
+                    requirementId: requirementId
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+
+                        $.each(data.requirement, function (key, val) {
+                            $('#m-detail-r1').empty();
+                            $('#m-detail-r2').empty();
+                            $('#m-title-detail').empty();
+                            $('#m-description').empty();
+                            $('#m-txt-requirementId').val(val['RequirementId'])
+
+                            var title = `<h2 class="modal-title">Cần gia sư dạy ${val["SubjectName"]} - ${val["GradeName"]}</h2>`
+
+                            var gender = val["GenderRequirement"];
+                            if (gender == 0) gender = "Nữ";
+                            else if (gender == 1) gender = "Nam";
+                            else gender = "Không yêu cầu";
+                            var div_1 = `
+                            <!--Thời lượng-->
+                            <div style="width: 33%; display: flex;">
+                                <div class="icon" style="padding-top: 5px;"><i class='far fa-clock' style='font-size:30px'></i></div>
+                                <div class="text" style="margin-top: 0; margin-left: 16px;">
+                                    <div style="font-weight: bold; font-size: 17px;">Thời lượng</div>
+                                    <div>${val["LessionNumber"]} buổi/tuần</div>
+                                </div>
+                            </div>
+
+                            <!--Giới tính gia sư-->
+                            <div style="width: 33%; display: flex;">
+                                <div class="icon" style="padding-top: 5px;"><i class='fas fa-venus-mars' style='font-size:30px'></i></div>
+                                <div class="text" style="margin-top: 0; margin-left: 16px;">
+                                    <div style="font-weight: bold; font-size: 17px;">Giới tính gia sư</div>
+                                    <div>${gender}</div>
+                                </div>
+                            </div>
+
+                            <!--Địa điểm-->
+                            <div style="width: 33%; display: flex;">
+                                <div class="icon" style="padding-top: 5px;"><i class='far fa-compass' style='font-size:30px'></i></div>
+                                <div class="text" style="margin-top: 0; margin-left: 16px;">
+                                    <div style="font-weight: bold; font-size: 17px;">Địa điểm</div>
+                                    <div>${val["LocationName"]}</div>
+                                </div>
+                            </div>`;
+
+                            var div_2 = `
+                            <!--Học phí mỗi buổi-->
+                            <div style="width: 33%; display: flex;">
+                                <div class="icon" style="padding-top: 5px;"><i class='fas fa-piggy-bank' style='font-size:30px'></i></div>
+                                <div class="text" style="margin-top: 0; margin-left: 16px;">
+                                    <div style="font-weight: bold; font-size: 17px;">Học phí mỗi buổi</div>
+                                    <div>
+                                        <b style="color:#dc3545;">${val["Tuition"]} ₫</b>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Phí nhận lớp-->
+                            <div style="width: 33%; display: flex;">
+                                <div class="icon" style="padding-top: 5px;"><i class='fas fa-hand-holding-usd' style='font-size:30px'></i></div>
+                                <div class="text" style="margin-top: 0; margin-left: 16px;">
+                                    <div style="font-weight: bold; font-size: 17px;">Phí nhận lớp</div>
+                                    <div>
+                                        <b style="color: #9dc6fb;">${val["CostAdmin"]} ₫</b>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Đề nghị-->
+                            <div style="width: 33%; display: flex;">
+                                <div class="icon" style="padding-top: 5px;"><i class='fas fa-users' style='font-size:30px'></i></div>
+                                <div class="text" style="margin-top: 0; margin-left: 16px;">
+                                    <div style="font-weight: bold; font-size: 17px;">Đã có</div>
+                                    <div>${val["TutorNumber"]} đề nghị dạy</div>
+                                </div>
+                            </div>`;
+                            var div_3 = `<h4 style="font-weight:bold">Chi tiết nội dung khóa học</h4>
+                                           ${val["RequirementDetail"]}`;
+                            $('#m-description').append(div_3);
+                            $('#m-title-detail').append(title);
+                            $('#m-detail-r1').append(div_1);
+                            $('#m-detail-r2').append(div_2);
+                        })
+
+                        $('#m-model_detail').modal();
+                    }
+                    else {
+                        alert(data.msg);
+                        return;
+                    }
+                }
+            })
+        });
+
+        $('#m-btn-submit').click(function () {
+            var requirementId = $('#m-txt-requirementId').val();
+            var tutorId = @ViewBag.TutorId;
+            var accountBalance = @ViewBag.AccountBalance;
+            var status = 0;
+            var check = true;
+            // Lấy thông tin yêu cầu
+            $.ajax({
+                url: '/EndUser/Home/RequirementDetail',
+                type: 'get',
+                data: {
+                    requirementId: requirementId
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.requirement, function (key, val) {
+                            var costAdmin = val['CostAdmin'];
+                            accountBalance = accountBalance - costAdmin;
+                            var tutorNumber = val['TutorNumber'] + 1;
+                            $.ajax({
+                                url: '/Tutor/Home/ApplicationDetail',
+                                type: 'get',
+                                data: {
+                                    requirementId: requirementId,
+                                    tutorId: tutorId
+                                },
+                                success: function (data) {
+                                    if (data.code == 200 && data.application.length >= 1) {
+                                        alert('Bạn đã ứng tuyển lớp này, vui lòng chọn lớp khác.');
+                                    }
+                                    else if (accountBalance < 0)
+                                    {
+                                        alert(`Số dư tài khoản của bạn là: ${@ViewBag.AccountBalance} VNĐ không đủ để ứng tuyển. Vui lòng nạp thêm tiền vào tài khoản.`);
+                                    }
+                                    else
+                                    {
+                                        // Thêm application
+                                        $.ajax({
+                                            url: '/Tutor/Home/InsertTutorApplication',
+                                            type: 'post',
+                                            data: {
+                                                requirementId: requirementId,
+                                                tutorId: tutorId,
+                                                applicationStatus: status
+                                            }
+                                        })
+                                        // Cập nhật số lượng gia sư đề nghị dạy
+                                        $.ajax({
+                                            url: '/Tutor/Home/UpdateTutorNumber',
+                                            type: 'post',
+                                            data: {
+                                                requirementId: requirementId,
+                                                tutorNumber: tutorNumber
+                                            }
+                                        })
+                                        // Trừ tiền của gia sư
+                                        $.ajax({
+                                            url: '/Tutor/Home/UpdateTutorBalance',
+                                            type: 'post',
+                                            data: {
+                                                tutorId: tutorId,
+                                                accountBalance: accountBalance
+                                            },
+                                            success: function (data) {
+                                                if (data.code == 200) {
+                                                    alert('Ứng tuyển thành công!');
+                                                    $('#m-model_detail').modal('hide');
+                                                    LoadData();
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
+                            });
+
+                        })
+                    }
+                }
+            });
+        });
+        function SloveText(txt) {
+            var text = "";
+            if (txt.length >= 45) {
+                for (var i = 0; i < 45; i++) {
+                    text = text + txt[i];
+                }
+                text = text + '...';
+                return text;
+            }
+        }
+    </script>
+}
+

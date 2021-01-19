@@ -1,0 +1,122 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/fontawesome-5.15.1/css/all.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .m-user {
+            cursor: pointer;
+        }
+
+        .m-close {
+            cursor: pointer;
+        }
+
+            .m-close:hover {
+                background-color: #eeeeee;
+            }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index","Home")">Gia sư trực tuyến</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="@Url.Action("Index","Home")">
+                            <span>
+                                <i class="fas fa-home"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <!--Quản lý danh mục-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Quản lý danh mục
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Môn học</a></li>
+                            <li><a href="#">Cấp học</a></li>
+                        </ul>
+                    </li>
+
+                    <!--Phụ huynh-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Phụ huynh
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Danh sách phụ huynh</a></li>
+                            <li><a href="@Url.Action("ListRequirement_checking","Home")">Lớp chờ gia sư chờ duyệt</a></li>
+                            <li><a href="@Url.Action("ListRequirement","Home")">Lớp chờ gia sư đã duyệt</a></li>
+                        </ul>
+                    </li>
+
+                    <!--Gia sư-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Gia sư
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Danh sách gia sư</a></li>
+                            <li><a href="#">Gia sư chờ phê duyệt</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#">Báo cáo thống kê</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Hỏi đáp</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav navbar-nav active" style="margin-top: 14px; margin-right:10px;">
+                        <span class="m-close" style="color: #337ab7;">
+                            <a href="@Url.Action("LogOut","Home")"><i class="fas fa-power-off"></i>Thoát</a>
+                        </span>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav navbar-nav active" style="margin-top: 14px; margin-right:10px;">
+                        <span class="m-user" style="color: #337ab7;">
+                            <i class="fas fa-user" style="margin-right: 5px;"></i>@ViewBag.UserName
+                        </span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>Đơn vị: Hệ thống thông tin quản lý K62</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

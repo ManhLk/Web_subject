@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="01d2da52311243c4a9f2c5ce6d3f4313" Name="Diagram1">
+        <EntityTypeShape EntityType="TutorOnlineModel.Account" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Administrator" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Detail_Subject_Grade" Width="1.5" PointX="8.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.EndUser" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Grade" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Job" Width="1.5" PointX="3.75" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Location" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Requirement" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Subject" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.Tutor" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TutorOnlineModel.TutorApplication" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Admin_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_EndUser_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Tutor_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Detail_Grade" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Detail_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Detail_Tutor" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_EndUser_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Requirement_EndUser" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Requirement_Grade" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Tutor_Job" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Requirement_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Application_Requirement" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Requirement_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="TutorOnlineModel.FK_Application_Tutor" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

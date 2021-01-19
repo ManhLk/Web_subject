@@ -1,0 +1,308 @@
+﻿@{ 
+    ViewBag.Title = "Requirement";
+    Layout = "~/Areas/EndUser/Views/Shared/_EndUser_Layout.cshtml";
+}
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="~/Asset/logo_white.png" alt="" />
+            <h3>Chào mừng phụ huynh!</h3>
+            <p>Đăng ký đầy đủ để gửi thông tin tìm gia sư.</p>
+            <button id="m-btn-dangKy" class="btn btn-info" type="submit" style="color: #000000; border-radius: 18px; background-color: #fdf1f1;">Đăng ký</button>
+            <br />
+        </div>
+        <div class="col-md-9 register-right">
+            <div class="tab-content" id="myTabContent">
+                <form class="form-horizontal">
+                    <fieldset>
+
+                        <!-- Form Name -->
+                        <h3 style="text-align:center; font-weight:bold;">Đăng ký tìm gia sư</h3>
+
+                        <!-- Tên phụ huynh-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="textinput">Họ và tên phụ huynh</label>
+                            <div class="col-md-6">
+                                <input id="m-txt-endUser" disabled name="textinput" type="text" value="@ViewBag.UserName" class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- Số điện thoại-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="prependedtext">Số điện thoại</label>
+                            <div class="col-md-6">
+                                <div class="input-group" style=" width: 280px;">
+                                    <span class="input-group-addon">
+                                        <i class="fas fa-phone"></i>
+                                    </span>
+                                    <input disabled id="prependedtext" name="prependedtext" class="form-control" value="@ViewBag.PhoneNumber" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Địa chỉ -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectbasic">Địa chỉ</label>
+                            <div class="col-md-6">
+                                <select id="m-location" name="selectbasic" class="form-control">
+                                    
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Mô tả -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="textarea">Mô tả</label>
+                            <div class="col-md-6">
+                                <textarea class="form-control" id="m-txt-description" name="textarea" placeholder="Mô tả thông tin về môn học cũng như thời gian,..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Môn học -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectbasic">Môn học</label>
+                            <div class="col-md-6">
+                                <select id="m-subject" name="selectbasic" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Lớp -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectbasic">Lớp</label>
+                            <div class="col-md-6">
+                                <select id="m-grade" name="selectbasic" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Thời lượng-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="appendedtext">Thời lượng</label>
+                            <div class="col-md-4">
+                                <div class="input-group" style="width: 280px;">
+                                    <input id="m-lessionNumber" min="1" max="7" name="appendedtext" class="form-control" placeholder="Số buổi/tuần" type="number">
+                                    <span class="input-group-addon">buổi/tuần</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Giới tính gia sư -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectbasic">Giới tính gia sư</label>
+                            <div class="col-md-6">
+                                <select id="m-genderRequirement" name="selectbasic" class="form-control">
+                                    <option value="3">Không yêu cầu</option>
+                                    <option value="0">Nữ</option>
+                                    <option value="1">Nam</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Học phí mỗi buổi-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="appendedtext">Học phí mỗi buổi</label>
+                            <div class="col-md-6">
+                                <div class="input-group" style="width:280px;">
+                                    <input id="m-tuition" name="appendedtext" min="50000" step="10000" class="form-control" placeholder="Học phí mỗi buổi" type="number">
+                                    <span class="input-group-addon">VND</span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+    .register{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    margin-top: 3%;
+    padding: 3%;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}
+</style>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            LoadData();
+        });
+
+        $('#m-btn-dangKy').click(function () {
+            // Kiểm tra nhập đủ dữ liệu chưa
+            var endUserName = $('#m-txt-endUser').val();
+            var endUserId = @ViewBag.EndUserId;
+            var locationId = $('#m-location').find(':selected').val();
+            var requirementDetail = $('#m-txt-description').val();
+            var subjectId = $('#m-subject').find(':selected').val();
+            var lessionNumber = $('#m-lessionNumber').val();
+            var genderRequirement = $('#m-genderRequirement').find(':selected').val();
+            var gradeId = $('#m-grade').find(':selected').val();
+            var tiution = $('#m-tuition').val();
+            var requirementStatus = 0;
+            var costAdmin = (lessionNumber * tiution) * 0.3;
+            if (requirementDetail.trim().lenght == 0 || lessionNumber == "" || tiution == "") {
+                alert(`Phụ huynh ${endUserName} vui lòng điền đầy đủ thông tin!`);
+                return;
+            }
+            // Thêm mới yêu cầu 
+            $.ajax({
+                url: '/EndUser/Home/AddRequirement',
+                type: 'post',
+                data: {
+                    subjectId: subjectId,
+                    gradeId: gradeId,
+                    genderRequirement: genderRequirement,
+                    tiution: tiution,
+                    costAdmin: costAdmin,
+                    requirementDetail: requirementDetail,
+                    lessionNumber: lessionNumber,
+                    requirementStatus: requirementStatus,
+                    endUserId: endUserId,
+                    locationId: locationId
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        alert(data.mgs);
+                        $('#m-txt-description').val('');
+                        $('#m-lessionNumber').val('');
+                        $('#m-tuition').val('');
+                    }
+                    else {
+                        alert(data.mgs);
+                    }
+                }
+            });
+        });
+
+        function LoadData() {
+            $.ajax({
+                url: '/EndUser/Home/Grade',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#m-grade').empty();
+                        $.each(data.grade, function (k, v) {
+                            var option = `<option value="${v["GradeId"]}">${v["GradeName"]}</option>`;
+                            $('#m-grade').append(option);
+                        });
+                        
+                    }
+                }
+            })
+            $.ajax({
+                url: '/EndUser/Home/Subject',
+                type: 'get',
+                success: function (data) {
+                    $('#m-subject').empty();
+                    if (data.code == 200) {
+                        $.each(data.subject, function (k, v) {
+                            var option = `<option value="${v["SubjectId"]}">${v["SubjectName"]}</option>`;
+                            $('#m-subject').append(option);
+                        });
+                    }
+                }
+            })
+
+            $.ajax({
+                url:'/EndUser/Home/Location',
+                type:'get',
+                success: function (data) {
+                    $('#m-location').empty();
+                    if (data.code == 200) {
+                        $.each(data.location, function (key, val) {
+                            var option = `<option value="${val["LocationID"]}">${val["LocationName"]}</option>`;
+                            $('#m-location').append(option);
+                        });
+                    }
+                }
+            })
+
+            
+        };
+    </script>
+    }

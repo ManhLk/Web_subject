@@ -1,0 +1,885 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TutorOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AccountType" Type="int" />
+        </EntityType>
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" Nullable="false" />
+          <Property Name="AdminName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Detail_Subject_Grade">
+          <Key>
+            <PropertyRef Name="TutorId" />
+            <PropertyRef Name="SubjectId" />
+            <PropertyRef Name="GradeId" />
+          </Key>
+          <Property Name="TutorId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="GradeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EndUser">
+          <Key>
+            <PropertyRef Name="EndUserId" />
+          </Key>
+          <Property Name="EndUserId" Type="int" Nullable="false" />
+          <Property Name="EndUserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="AddressId" Type="int" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="GradeId" />
+          </Key>
+          <Property Name="GradeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GradeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Requirement">
+          <Key>
+            <PropertyRef Name="RequirementId" />
+          </Key>
+          <Property Name="RequirementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="GradeId" Type="int" Nullable="false" />
+          <Property Name="GenderRequirement" Type="int" />
+          <Property Name="Tuition" Type="float" />
+          <Property Name="CostAdmin" Type="float" />
+          <Property Name="RequirementDetail" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LessionNumber" Type="int" />
+          <Property Name="RequirementStatus" Type="int" />
+          <Property Name="TutorNumber" Type="int" />
+          <Property Name="EndUserId" Type="int" />
+          <Property Name="LocationId" Type="int" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="SubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SujectName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tutor">
+          <Key>
+            <PropertyRef Name="TutorID" />
+          </Key>
+          <Property Name="TutorID" Type="int" Nullable="false" />
+          <Property Name="TutorName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Avatar" Type="varchar" MaxLength="100" />
+          <Property Name="CMT" Type="varchar" MaxLength="100" />
+          <Property Name="TutorDetail" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Degree" Type="varchar" MaxLength="100" />
+          <Property Name="Point" Type="int" />
+          <Property Name="AccountBalance" Type="float" />
+          <Property Name="TutorStatus" Type="int" />
+          <Property Name="JobId" Type="int" />
+        </EntityType>
+        <EntityType Name="TutorApplication">
+          <Key>
+            <PropertyRef Name="RequirementId" />
+            <PropertyRef Name="TutorId" />
+          </Key>
+          <Property Name="RequirementId" Type="int" Nullable="false" />
+          <Property Name="TutorId" Type="int" Nullable="false" />
+          <Property Name="ApplicationStatus" Type="int" />
+        </EntityType>
+        <Association Name="FK_Admin_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="Administrator">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Application_Requirement">
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="1" />
+          <End Role="TutorApplication" Type="Self.TutorApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirement">
+              <PropertyRef Name="RequirementId" />
+            </Principal>
+            <Dependent Role="TutorApplication">
+              <PropertyRef Name="RequirementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Application_Tutor">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="1" />
+          <End Role="TutorApplication" Type="Self.TutorApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="TutorID" />
+            </Principal>
+            <Dependent Role="TutorApplication">
+              <PropertyRef Name="TutorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detail_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="Detail_Subject_Grade" Type="Self.Detail_Subject_Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="GradeId" />
+            </Principal>
+            <Dependent Role="Detail_Subject_Grade">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detail_Subject">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Detail_Subject_Grade" Type="Self.Detail_Subject_Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Detail_Subject_Grade">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detail_Tutor">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="1" />
+          <End Role="Detail_Subject_Grade" Type="Self.Detail_Subject_Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="TutorID" />
+            </Principal>
+            <Dependent Role="Detail_Subject_Grade">
+              <PropertyRef Name="TutorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EndUser_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="EndUser">
+              <PropertyRef Name="EndUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EndUser_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="EndUser">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_EndUser">
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="0..1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="EndUserId" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="EndUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="GradeId" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Subject">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tutor_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="Tutor">
+              <PropertyRef Name="TutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tutor_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="0..1" />
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="Tutor">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TutorOnlineModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Detail_Subject_Grade" EntityType="Self.Detail_Subject_Grade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EndUser" EntityType="Self.EndUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requirement" EntityType="Self.Requirement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tutor" EntityType="Self.Tutor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorApplication" EntityType="Self.TutorApplication" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Admin_Account" Association="Self.FK_Admin_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Administrator" EntitySet="Administrator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Application_Requirement" Association="Self.FK_Application_Requirement">
+            <End Role="Requirement" EntitySet="Requirement" />
+            <End Role="TutorApplication" EntitySet="TutorApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Application_Tutor" Association="Self.FK_Application_Tutor">
+            <End Role="Tutor" EntitySet="Tutor" />
+            <End Role="TutorApplication" EntitySet="TutorApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detail_Grade" Association="Self.FK_Detail_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="Detail_Subject_Grade" EntitySet="Detail_Subject_Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detail_Subject" Association="Self.FK_Detail_Subject">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Detail_Subject_Grade" EntitySet="Detail_Subject_Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detail_Tutor" Association="Self.FK_Detail_Tutor">
+            <End Role="Tutor" EntitySet="Tutor" />
+            <End Role="Detail_Subject_Grade" EntitySet="Detail_Subject_Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EndUser_Account" Association="Self.FK_EndUser_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="EndUser" EntitySet="EndUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EndUser_Location" Association="Self.FK_EndUser_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="EndUser" EntitySet="EndUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_EndUser" Association="Self.FK_Requirement_EndUser">
+            <End Role="EndUser" EntitySet="EndUser" />
+            <End Role="Requirement" EntitySet="Requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Grade" Association="Self.FK_Requirement_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="Requirement" EntitySet="Requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Location" Association="Self.FK_Requirement_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Requirement" EntitySet="Requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Subject" Association="Self.FK_Requirement_Subject">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Requirement" EntitySet="Requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tutor_Account" Association="Self.FK_Tutor_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Tutor" EntitySet="Tutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tutor_Job" Association="Self.FK_Tutor_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Tutor" EntitySet="Tutor" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TutorOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AccountType" Type="Int32" />
+          <NavigationProperty Name="Administrator" Relationship="Self.FK_Admin_Account" FromRole="Account" ToRole="Administrator" />
+          <NavigationProperty Name="EndUser" Relationship="Self.FK_EndUser_Account" FromRole="Account" ToRole="EndUser" />
+          <NavigationProperty Name="Tutor" Relationship="Self.FK_Tutor_Account" FromRole="Account" ToRole="Tutor" />
+        </EntityType>
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" />
+          <Property Name="AdminName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Admin_Account" FromRole="Administrator" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Detail_Subject_Grade">
+          <Key>
+            <PropertyRef Name="TutorId" />
+            <PropertyRef Name="SubjectId" />
+            <PropertyRef Name="GradeId" />
+          </Key>
+          <Property Name="TutorId" Type="Int32" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="GradeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_Detail_Grade" FromRole="Detail_Subject_Grade" ToRole="Grade" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_Detail_Subject" FromRole="Detail_Subject_Grade" ToRole="Subjects" />
+          <NavigationProperty Name="Tutor" Relationship="Self.FK_Detail_Tutor" FromRole="Detail_Subject_Grade" ToRole="Tutor" />
+        </EntityType>
+        <EntityType Name="EndUser">
+          <Key>
+            <PropertyRef Name="EndUserId" />
+          </Key>
+          <Property Name="EndUserId" Type="Int32" Nullable="false" />
+          <Property Name="EndUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AddressId" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_EndUser_Account" FromRole="EndUser" ToRole="Account" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_EndUser_Location" FromRole="EndUser" ToRole="Location" />
+          <NavigationProperty Name="Requirements" Relationship="Self.FK_Requirement_EndUser" FromRole="EndUser" ToRole="Requirement" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="GradeId" />
+          </Key>
+          <Property Name="GradeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GradeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Detail_Subject_Grade" Relationship="Self.FK_Detail_Grade" FromRole="Grade" ToRole="Detail_Subject_Grade" />
+          <NavigationProperty Name="Requirements" Relationship="Self.FK_Requirement_Grade" FromRole="Grade" ToRole="Requirement" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tutors" Relationship="Self.FK_Tutor_Job" FromRole="Job" ToRole="Tutor" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EndUsers" Relationship="Self.FK_EndUser_Location" FromRole="Location" ToRole="EndUser" />
+          <NavigationProperty Name="Requirements" Relationship="Self.FK_Requirement_Location" FromRole="Location" ToRole="Requirement" />
+        </EntityType>
+        <EntityType Name="Requirement">
+          <Key>
+            <PropertyRef Name="RequirementId" />
+          </Key>
+          <Property Name="RequirementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="GradeId" Type="Int32" Nullable="false" />
+          <Property Name="GenderRequirement" Type="Int32" />
+          <Property Name="Tuition" Type="Double" />
+          <Property Name="CostAdmin" Type="Double" />
+          <Property Name="RequirementDetail" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LessionNumber" Type="Int32" />
+          <Property Name="RequirementStatus" Type="Int32" />
+          <Property Name="TutorNumber" Type="Int32" />
+          <Property Name="EndUserId" Type="Int32" />
+          <Property Name="LocationId" Type="Int32" />
+          <NavigationProperty Name="EndUser" Relationship="Self.FK_Requirement_EndUser" FromRole="Requirement" ToRole="EndUser" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_Requirement_Grade" FromRole="Requirement" ToRole="Grade" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Requirement_Location" FromRole="Requirement" ToRole="Location" />
+          <NavigationProperty Name="TutorApplications" Relationship="Self.FK_Application_Requirement" FromRole="Requirement" ToRole="TutorApplication" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_Requirement_Subject" FromRole="Requirement" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="SubjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SujectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Detail_Subject_Grade" Relationship="Self.FK_Detail_Subject" FromRole="Subjects" ToRole="Detail_Subject_Grade" />
+          <NavigationProperty Name="Requirements" Relationship="Self.FK_Requirement_Subject" FromRole="Subjects" ToRole="Requirement" />
+        </EntityType>
+        <EntityType Name="Tutor">
+          <Key>
+            <PropertyRef Name="TutorID" />
+          </Key>
+          <Property Name="TutorID" Type="Int32" Nullable="false" />
+          <Property Name="TutorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Avatar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CMT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TutorDetail" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Degree" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Point" Type="Int32" />
+          <Property Name="AccountBalance" Type="Double" />
+          <Property Name="TutorStatus" Type="Int32" />
+          <Property Name="JobId" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Tutor_Account" FromRole="Tutor" ToRole="Account" />
+          <NavigationProperty Name="Detail_Subject_Grade" Relationship="Self.FK_Detail_Tutor" FromRole="Tutor" ToRole="Detail_Subject_Grade" />
+          <NavigationProperty Name="Job" Relationship="Self.FK_Tutor_Job" FromRole="Tutor" ToRole="Job" />
+          <NavigationProperty Name="TutorApplications" Relationship="Self.FK_Application_Tutor" FromRole="Tutor" ToRole="TutorApplication" />
+        </EntityType>
+        <EntityType Name="TutorApplication">
+          <Key>
+            <PropertyRef Name="RequirementId" />
+            <PropertyRef Name="TutorId" />
+          </Key>
+          <Property Name="RequirementId" Type="Int32" Nullable="false" />
+          <Property Name="TutorId" Type="Int32" Nullable="false" />
+          <Property Name="ApplicationStatus" Type="Int32" />
+          <NavigationProperty Name="Requirement" Relationship="Self.FK_Application_Requirement" FromRole="TutorApplication" ToRole="Requirement" />
+          <NavigationProperty Name="Tutor" Relationship="Self.FK_Application_Tutor" FromRole="TutorApplication" ToRole="Tutor" />
+        </EntityType>
+        <Association Name="FK_Admin_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="Administrator">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EndUser_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="EndUser">
+              <PropertyRef Name="EndUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tutor_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="Tutor">
+              <PropertyRef Name="TutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detail_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="Detail_Subject_Grade" Type="Self.Detail_Subject_Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="GradeId" />
+            </Principal>
+            <Dependent Role="Detail_Subject_Grade">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detail_Subject">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+          <End Role="Detail_Subject_Grade" Type="Self.Detail_Subject_Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Detail_Subject_Grade">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detail_Tutor">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="1" />
+          <End Role="Detail_Subject_Grade" Type="Self.Detail_Subject_Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="TutorID" />
+            </Principal>
+            <Dependent Role="Detail_Subject_Grade">
+              <PropertyRef Name="TutorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EndUser_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="EndUser">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_EndUser">
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="0..1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="EndUserId" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="EndUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="GradeId" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tutor_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="0..1" />
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="Tutor">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Application_Requirement">
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="1" />
+          <End Role="TutorApplication" Type="Self.TutorApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirement">
+              <PropertyRef Name="RequirementId" />
+            </Principal>
+            <Dependent Role="TutorApplication">
+              <PropertyRef Name="RequirementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Subject">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Application_Tutor">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="1" />
+          <End Role="TutorApplication" Type="Self.TutorApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="TutorID" />
+            </Principal>
+            <Dependent Role="TutorApplication">
+              <PropertyRef Name="TutorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Administrators" EntityType="Self.Administrator" />
+          <EntitySet Name="Detail_Subject_Grade" EntityType="Self.Detail_Subject_Grade" />
+          <EntitySet Name="EndUsers" EntityType="Self.EndUser" />
+          <EntitySet Name="Grades" EntityType="Self.Grade" />
+          <EntitySet Name="Jobs" EntityType="Self.Job" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Requirements" EntityType="Self.Requirement" />
+          <EntitySet Name="Subjects" EntityType="Self.Subject" />
+          <EntitySet Name="Tutors" EntityType="Self.Tutor" />
+          <EntitySet Name="TutorApplications" EntityType="Self.TutorApplication" />
+          <AssociationSet Name="FK_Admin_Account" Association="Self.FK_Admin_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Administrator" EntitySet="Administrators" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EndUser_Account" Association="Self.FK_EndUser_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="EndUser" EntitySet="EndUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tutor_Account" Association="Self.FK_Tutor_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Tutor" EntitySet="Tutors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detail_Grade" Association="Self.FK_Detail_Grade">
+            <End Role="Grade" EntitySet="Grades" />
+            <End Role="Detail_Subject_Grade" EntitySet="Detail_Subject_Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detail_Subject" Association="Self.FK_Detail_Subject">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Detail_Subject_Grade" EntitySet="Detail_Subject_Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detail_Tutor" Association="Self.FK_Detail_Tutor">
+            <End Role="Tutor" EntitySet="Tutors" />
+            <End Role="Detail_Subject_Grade" EntitySet="Detail_Subject_Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EndUser_Location" Association="Self.FK_EndUser_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="EndUser" EntitySet="EndUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_EndUser" Association="Self.FK_Requirement_EndUser">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="Requirement" EntitySet="Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Grade" Association="Self.FK_Requirement_Grade">
+            <End Role="Grade" EntitySet="Grades" />
+            <End Role="Requirement" EntitySet="Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tutor_Job" Association="Self.FK_Tutor_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="Tutor" EntitySet="Tutors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Location" Association="Self.FK_Requirement_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Requirement" EntitySet="Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Application_Requirement" Association="Self.FK_Application_Requirement">
+            <End Role="Requirement" EntitySet="Requirements" />
+            <End Role="TutorApplication" EntitySet="TutorApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Subject" Association="Self.FK_Requirement_Subject">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Requirement" EntitySet="Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Application_Tutor" Association="Self.FK_Application_Tutor">
+            <End Role="Tutor" EntitySet="Tutors" />
+            <End Role="TutorApplication" EntitySet="TutorApplications" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TutorOnlineModelStoreContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Administrators">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Administrator">
+              <MappingFragment StoreEntitySet="Administrator">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="AdminName" ColumnName="AdminName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Detail_Subject_Grade">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Detail_Subject_Grade">
+              <MappingFragment StoreEntitySet="Detail_Subject_Grade">
+                <ScalarProperty Name="TutorId" ColumnName="TutorId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EndUsers">
+            <EntityTypeMapping TypeName="TutorOnlineModel.EndUser">
+              <MappingFragment StoreEntitySet="EndUser">
+                <ScalarProperty Name="EndUserId" ColumnName="EndUserId" />
+                <ScalarProperty Name="EndUserName" ColumnName="EndUserName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Grade">
+              <MappingFragment StoreEntitySet="Grade">
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requirements">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Requirement">
+              <MappingFragment StoreEntitySet="Requirement">
+                <ScalarProperty Name="RequirementId" ColumnName="RequirementId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="GenderRequirement" ColumnName="GenderRequirement" />
+                <ScalarProperty Name="Tuition" ColumnName="Tuition" />
+                <ScalarProperty Name="CostAdmin" ColumnName="CostAdmin" />
+                <ScalarProperty Name="RequirementDetail" ColumnName="RequirementDetail" />
+                <ScalarProperty Name="LessionNumber" ColumnName="LessionNumber" />
+                <ScalarProperty Name="RequirementStatus" ColumnName="RequirementStatus" />
+                <ScalarProperty Name="TutorNumber" ColumnName="TutorNumber" />
+                <ScalarProperty Name="EndUserId" ColumnName="EndUserId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="SujectName" ColumnName="SujectName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tutors">
+            <EntityTypeMapping TypeName="TutorOnlineModel.Tutor">
+              <MappingFragment StoreEntitySet="Tutor">
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+                <ScalarProperty Name="TutorName" ColumnName="TutorName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="CMT" ColumnName="CMT" />
+                <ScalarProperty Name="TutorDetail" ColumnName="TutorDetail" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="AccountBalance" ColumnName="AccountBalance" />
+                <ScalarProperty Name="TutorStatus" ColumnName="TutorStatus" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorApplications">
+            <EntityTypeMapping TypeName="TutorOnlineModel.TutorApplication">
+              <MappingFragment StoreEntitySet="TutorApplication">
+                <ScalarProperty Name="RequirementId" ColumnName="RequirementId" />
+                <ScalarProperty Name="TutorId" ColumnName="TutorId" />
+                <ScalarProperty Name="ApplicationStatus" ColumnName="ApplicationStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

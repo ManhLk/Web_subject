@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "ListApplication";
+    Layout = "~/Areas/Tutor/Views/Shared/_Tutor_LayOut.cshtml";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3>Danh sách lớp đã ứng tuyển</h3></div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Mã lớp</th>
+                    <th scope="col">Lớp</th>
+                    <th scope="col">Môn học</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Học phí mỗi buổi (VNĐ)</th>
+                    <th scope="col">Phí nhận lớp (VNĐ)</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Xóa yêu cầu</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function(){
+            LoadTableData();
+        });
+
+        $('tbody').on('click', 'button', function () {
+            var requirementId = $(this).attr('id');
+            var tutorId = @ViewBag.TutorId;
+            // Lấy chi tiếp Application
+            $.ajax({
+                url: '/Tutor/Home/ApplicationDetail',
+                type: 'get',
+                data: {
+                    requirementId: requirementId,
+                    tutorId: tutorId
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        var result = confirm('Xác nhận xóa yêu cầu ?')
+                        if (result) {
+                            $.each(data.application, function (key, val) {
+                                var accountBalance
+                                // Kiểm tra status nếu bằng 0 thì trả tiền cho gia sư
+                                if (val["ApplicationStatus"] == 0) {
+                                    accountBalance = @ViewBag.AccountBalance + val["CostAdmin"];
+                                    $.ajax({
+                                        url: '/Tutor/Home/UpdateTutorBalance',
+                                        type: 'post',
+                                        data: {
+                                            tutorId: tutorId,
+                                            accountBalance: accountBalance
+                                        },
+                                        success: function (data) {
+                                            if (data.code == 500) {
+                                                alert(data.msg);
+                                                LoadTableData();
+                                            }
+                                        }
+                                    });
+                                }
+
+                                // Xóa đề nghị
+                                var tutorNumber = 0;
+                                if (val["ApplicationStatus"] == 0) tutorNumber = val["TutorNumber"] - 1;
+                                $.ajax({
+                                    url: '/Tutor/Home/UpdateTutorNumber',
+                                    type: 'post',
+                                    data: {
+                                        requirementId: requirementId,
+                                        tutorNumber: tutorNumber
+                                    }
+                                })
+                                // Xoa TutorApplication
+                                $.ajax({
+                                    url: '/Tutor/Home/DeleteApplication',
+                                    type: 'post',
+                                    data: {
+                                        requirementId: requirementId,
+                                        tutorId: tutorId
+                                    },
+                                    success: function (data) {
+                                        if (data.code == 200) {
+                                            alert(data.msg);
+                                            LoadTableData();
+                                        }
+                                    }
+                                })
+                            })
+                        }
+                        
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            })
+        })
+
+        function LoadTableData() {
+            var tutorId = @ViewBag.TutorId;
+            $.ajax({
+                url: '/Tutor/Home/ApplicationByTutorId',
+                type: 'get',
+                data: {
+                    tutorId: tutorId
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('tbody').empty();
+                        $.each(data.application, function (key, val) {
+                            var status ='';
+                            switch (val["ApplicationStatus"]) {
+                                case 0: status = 'Chờ phê duyệt';
+                                    break;
+                                case 1: status = "Thành công";
+                                    break;
+                                default: status = "Thất bại";
+                            }
+                            var tr = `<tr>
+                                    <th scope="row">${val["RequirementId"]}</th>
+                                    <td>${val["GradeName"]}</td>
+                                    <td>${val["SubjectName"]}</td>
+                                    <td>${val["LocationName"]}</td>
+                                    <td>${val["Tuition"]}</td>
+                                    <td>${val["CostAdmin"]}</td>
+                                    <td>${status}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" id="${val["RequirementId"]}"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>`;
+                            $('tbody').append(tr);
+                        })
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            })
+        }
+    </script>
+    }
+
